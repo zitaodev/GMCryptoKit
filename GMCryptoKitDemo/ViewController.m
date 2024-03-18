@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSMutableString *logStr = [NSMutableString stringWithString:@""];
     // 生成指定字节的加密安全随机数
