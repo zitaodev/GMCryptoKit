@@ -57,7 +57,7 @@ BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forDat
 
 ## 环境要求
 
-- GmSSL 静态库v3.1.0+
+- [GmSSL](https://github.com/guanzhi/GmSSL) 静态库v3.1.0+
 - Xcode 14.3+
 - iOS 8.0+
 
@@ -67,9 +67,13 @@ BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forDat
 
 - 将源代码中 GMCryptoKit 目录导入 App 项目，并选中 ***Copy items if needed***
 
-- 从[GmSSL](https://github.com/guanzhi/GmSSL)编译获取GmSSL 静态库：libgmssl 和对应的头文件，并添加到 App项目中
+- 从[GmSSL](https://github.com/guanzhi/GmSSL) 编译获取GmSSL 静态库：libgmssl 和对应的头文件，并添加到 App项目中
 
-  > 注意：GmSSL 版本需要编译v3.1.0或以上版本
+  > 注意：
+  >
+  > 1、[GmSSL](https://github.com/guanzhi/GmSSL) 版本需要编译v3.1.0或以上版本.
+  >
+  > 2、[GmSSL 静态库编译步骤](https://github.com/guanzhi/GmSSL/blob/v3.1.0/INSTALL.md)
 
 ## 运行示例应用程序
 
