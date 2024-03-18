@@ -10,7 +10,7 @@
 
 @implementation GMRandomGenerator
 
-+ (NSData *)randomDataWithLength:(NSUInteger)length {
++ (NSData *)gm_secRandomDataWithLength:(NSUInteger)length {
     if (length == 0) {
         return nil;
     }

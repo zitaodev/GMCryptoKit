@@ -24,7 +24,7 @@
     
     
     // 加密和解密
-    NSData *plaintextData = [GMRandomGenerator randomDataWithLength:12];// 待加密的原文Data数据
+    NSData *plaintextData = [GMRandomGenerator gm_secRandomDataWithLength:12];// 待加密的原文Data数据
     NSData *ciphertextData = [GMSm2Cryptor gm_sm2EncryptData:plaintextData withPublicKey:publicKey];
     NSData *decryptedData = [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:privateKey];
     
@@ -38,7 +38,7 @@
     NSLog(@"%@", encAndDecStr);
     
     // 数字签名和验证
-    NSData *messageData = [GMRandomGenerator randomDataWithLength:36]; // 待签名的数据
+    NSData *messageData = [GMRandomGenerator gm_secRandomDataWithLength:36]; // 待签名的数据
     NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:messageData withPrivateKey:privateKey];
     BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
 
@@ -49,7 +49,7 @@
     [sigAndVerStr appendFormat:@"\nSM2私钥：%@", privateKey];
     [sigAndVerStr appendFormat:@"\nSM2数字签名：%@", signatureData];
     [sigAndVerStr appendFormat:@"\nSM2验签结果：%@", isSignatureValid ? @"验签成功" : @"验签失败"];
-    NSLog(@"%@", encAndDecStr);
+    NSLog(@"%@", sigAndVerStr);
 }
 
 @end

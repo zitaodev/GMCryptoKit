@@ -26,7 +26,7 @@
     self.pubKey = keyPair[@"publicKey"];
     self.priKey = keyPair[@"privateKey"];
     
-    self.plaintextData = [GMRandomGenerator randomDataWithLength:16];
+    self.plaintextData = [GMRandomGenerator gm_secRandomDataWithLength:16];
 }
 
 - (void)tearDown {
@@ -41,7 +41,7 @@
     
     // 1、测试生成的随机数不为空
     for (int i = 0; i < 1000; i++) {
-        NSData *randomData = [GMRandomGenerator randomDataWithLength: i + 1];
+        NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength: i + 1];
         XCTAssertNotNil(randomData, @"生成的随机数不为空");
     }
     
@@ -129,7 +129,7 @@
     [self measureBlock:^{
         // 生成随机数
         NSUInteger length = 1 + arc4random() % 100;
-        NSData *randomData = [GMRandomGenerator randomDataWithLength:length];
+        NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength:length];
         XCTAssertNotNil(randomData, @"生成的随机数不为空");
     }];
 }
