@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GMRandomGenerator : NSObject
 
 /**
- 生成指定字节长度的安全随机数
+ 生成指定字节长度的加密安全随机数
  
  @param length 指定的随机数长度
  @return 填充指定字节长度的NSData格式随机数
