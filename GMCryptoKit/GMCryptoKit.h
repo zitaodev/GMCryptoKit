@@ -16,5 +16,6 @@ FOUNDATION_EXPORT const unsigned char GMCryptoKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <GMCryptoKit/PublicHeader.h>
 
+//#import <GMCryptoKit/GMSm3Digest.h>
 #import <GMCryptoKit/GMSm2Cryptor.h>
 #import <GMCryptoKit/GMRandomGenerator.h>

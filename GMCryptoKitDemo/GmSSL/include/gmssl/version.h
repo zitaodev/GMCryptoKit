@@ -8,22 +8,28 @@
  */
 
 
-#ifndef GMSSL_RAND_H
-#define GMSSL_RAND_H
 
-#include <stdint.h>
-#include <stdlib.h>
+#ifndef GMSSL_VERSION_H
+#define GMSSL_VERSION_H
+
 #include <gmssl/api.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/*
+Version Public API
 
-#define RAND_BYTES_MAX_SIZE	(256)
+	gmssl_version_num
+	gmssl_version_str
+*/
 
-_gmssl_export int rand_bytes(uint8_t *buf, size_t buflen);
+#define GMSSL_VERSION_NUM	30100
+#define GMSSL_VERSION_STR	"GmSSL 3.1.0"
 
+_gmssl_export int gmssl_version_num(void);
+_gmssl_export const char *gmssl_version_str(void);
 
 #ifdef __cplusplus
 }

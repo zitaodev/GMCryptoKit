@@ -1,5 +1,5 @@
 ﻿/*
- *  Copyright 2014-2023 The GmSSL Project. All Rights Reserved.
+ *  Copyright 2014-2022 The GmSSL Project. All Rights Reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the License); you may
  *  not use this file except in compliance with the License.
@@ -26,6 +26,39 @@
 extern "C" {
 #endif
 
+
+/*
+TLS Public API
+
+	TLS_PROTOCOL
+	TLS_protocol_tlcp
+	TLS_protocol_tls12
+	TLS_protocol_tls13
+
+	TLS_CIPHER_SUITE
+	TLS_cipher_ecc_sm4_cbc_sm3
+	TLS_cipher_ecc_sm4_gcm_sm3
+	TLS_cipher_ecdhe_sm4_cbc_sm3
+	TLS_cipher_ecdhe_sm4_gcm_sm3
+	TLS_cipher_sm4_gcm_sm3
+
+	TLS_CTX
+	tls_ctx_init
+	tls_ctx_set_cipher_suites
+	tls_ctx_set_ca_certificates
+	tls_ctx_set_certificate_and_key
+	tls_ctx_set_tlcp_server_certificate_and_keys
+	tls_ctx_cleanup
+
+	TLS_CONNECT
+	tls_init
+	tls_set_socket
+	tls_do_handshake
+	tls_send
+	tls_recv
+	tls_shutdown
+	tls_cleanup
+*/
 
 typedef uint32_t uint24_t;
 
@@ -271,7 +304,7 @@ typedef enum {
 	TLS_curve_sm2p256v1			= 41, // GmSSLv2: 30
 } TLS_NAMED_CURVE;
 
-const char *tls_curve_name(int curve);
+const char *tls_named_curve_name(int curve);
 
 
 typedef enum {
@@ -309,7 +342,6 @@ typedef enum {
 
 
 typedef enum {
-	TLS_alert_level_undefined = 0,
 	TLS_alert_level_warning = 1,
 	TLS_alert_level_fatal = 2,
 } TLS_ALERT_LEVEL;
@@ -684,8 +716,6 @@ typedef struct {
 	SM2_KEY signkey;
 	SM2_KEY kenckey;
 	int verify_depth;
-
-	int quiet;
 } TLS_CTX;
 
 int tls_ctx_init(TLS_CTX *ctx, int protocol, int is_client);
@@ -718,7 +748,8 @@ typedef struct {
 
 	uint8_t record[TLS_MAX_RECORD_SIZE];
 
-	uint8_t databuf[TLS_MAX_RECORD_SIZE];
+	// 其实这个就不太对了，还是应该有一个完整的密文记录
+	uint8_t databuf[TLS_MAX_PLAINTEXT_SIZE];
 	uint8_t *data;
 	size_t datalen;
 
@@ -752,7 +783,6 @@ typedef struct {
 	BLOCK_CIPHER_KEY client_write_key;
 	BLOCK_CIPHER_KEY server_write_key;
 
-	int quiet;
 } TLS_CONNECT;
 
 
@@ -824,23 +854,20 @@ int tls13_gcm_decrypt(const BLOCK_CIPHER_KEY *key, const uint8_t iv[12],
 	int *record_type, uint8_t *out, size_t *outlen);
 
 
-#ifdef ENABLE_TLS_DEBUG
+#ifdef TLS_DEBUG
 #	define tls_trace(s) fprintf(stderr,(s))
 #	define tls_record_trace(fp,rec,reclen,fmt,ind)  tls_record_print(fp,rec,reclen,fmt,ind)
-#	define tls_encrypted_record_trace(fp,rec,reclen,fmt,ind)  tls_encrypted_record_print(fp,rec,reclen,fmt,ind)
 #	define tlcp_record_trace(fp,rec,reclen,fmt,ind)  tlcp_record_print(fp,rec,reclen,fmt,ind)
 #	define tls12_record_trace(fp,rec,reclen,fmt,ind)  tls12_record_print(fp,rec,reclen,fmt,ind)
 #	define tls13_record_trace(fp,rec,reclen,fmt,ind)  tls13_record_print(fp,fmt,ind,rec,reclen)
 #else
 #	define tls_trace(s)
 #	define tls_record_trace(fp,rec,reclen,fmt,ind)
-#	define tls_encrypted_record_trace(fp,rec,reclen,fmt,ind)
 #	define tlcp_record_trace(fp,rec,reclen,fmt,ind)
 #	define tls12_record_trace(fp,rec,reclen,fmt,ind)
 #	define tls13_record_trace(fp,rec,reclen,fmt,ind)
 #endif
 
-int tls_encrypted_record_print(FILE *fp, const uint8_t *record,  size_t recordlen, int format, int indent);
 
 #ifdef  __cplusplus
 }

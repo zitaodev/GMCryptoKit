@@ -8,23 +8,25 @@
  */
 
 
-#ifndef GMSSL_RDRAND_H
-#define GMSSL_RDRAND_H
+#ifndef GMSSL_RAND_H
+#define GMSSL_RAND_H
 
 #include <stdint.h>
 #include <stdlib.h>
-
+#include <gmssl/api.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/*
+Rand Public API
 
-int rdrand_bytes(uint8_t *buf, size_t buflen);
+	rand_bytes
 
-#ifdef INTEL_RDSEED
-int rdseed_bytes(uint8_t *buf, size_t buflen);
-#endif
+*/
+
+_gmssl_export int rand_bytes(uint8_t *buf, size_t buflen);
 
 
 #ifdef __cplusplus

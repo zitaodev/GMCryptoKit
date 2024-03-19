@@ -53,6 +53,14 @@
     [logStr appendFormat:@"\nSM2私钥：%@", privateKey];
     [logStr appendFormat:@"\nSM2数字签名：%@", signatureData];
     [logStr appendFormat:@"\nSM2验签结果：%@", isSignatureValid ? @"验签成功" : @"验签失败"];
+    
+//    // SM3提取摘要
+//    NSData *mesData = [@"hello world!" dataUsingEncoding:NSUTF8StringEncoding];
+//    NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:mesData];
+//    [logStr appendString:@"\n-------SM3提取摘要-------"];
+//    [logStr appendFormat:@"\nSM3待提取消息：%@", mesData];
+//    [logStr appendFormat:@"\nSM3摘要值：%@", digestData];
+    
     NSLog(@"%@", logStr);
 }
 
