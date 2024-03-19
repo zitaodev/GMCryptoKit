@@ -16,8 +16,8 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 ### 待完成功能：
 
 - **SM3 哈希算法：** 使用 SM3 哈希算法计算哈希值的功能。
-- **SM4 对称加密算法：**使用 SM4 对称加密算法进行加解密的功能。
-- **SM9 加密算法：**使用 SM9 加密算法进行加密和解密的功能。
+- **SM4 对称加密算法：** 使用 SM4 对称加密算法进行加解密的功能。
+- **SM9 加密算法：** 使用 SM9 加密算法进行加密和解密的功能。
 
 ## 功能特性
 
@@ -57,7 +57,7 @@ BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forDat
 
 ## 环境要求
 
-- [GmSSL](https://github.com/guanzhi/GmSSL) 静态库v3.1.0+
+- GmSSL v3.1.0+
 - Xcode 14.3+
 - iOS 8.0+
 
