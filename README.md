@@ -69,11 +69,14 @@ BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forDat
 
 - 从[GmSSL](https://github.com/guanzhi/GmSSL) 编译获取GmSSL 静态库：libgmssl 和对应的头文件，并添加到 App项目中
 
+- 导入头文件\#import <GMCryptoKit/GMCryptoKit.h>即可调用国密算法
+
+
   > 注意：
   >
   > 1、[GmSSL](https://github.com/guanzhi/GmSSL) 版本需要编译v3.1.0或以上版本.
   >
-  > 2、[GmSSL 静态库编译步骤](https://github.com/guanzhi/GmSSL/blob/v3.1.0/INSTALL.md)
+  > 2、[GmSSL 静态库编译步骤参考](https://github.com/guanzhi/GmSSL/blob/v3.1.0/INSTALL.md)
 
 ## 运行示例应用程序
 
