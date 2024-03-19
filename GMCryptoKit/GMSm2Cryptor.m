@@ -37,9 +37,9 @@
 
 + (NSData *_Nullable)gm_sm2EncryptData:(NSData *)plaintextData
                          withPublicKey:(NSData *)publicKey {
-    if (plaintextData.length == 0 || publicKey.length == 0 || publicKey.length != 64) {
-        return nil;
-    }
+    NSParameterAssert(plaintextData != nil);
+    NSParameterAssert(publicKey != nil);
+    NSParameterAssert(publicKey.length == 64);
     
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     uint8_t *pub_text = (uint8_t *)publicKey.bytes;
@@ -75,9 +75,10 @@
 
 + (NSData *_Nullable)gm_sm2DecryptData:(NSData *)cipherData
                         withPrivateKey:(NSData *)privateKey {
-    if (cipherData.length == 0 || cipherData.length < 32 * 3 + 1 || privateKey.length == 0 || privateKey.length != 32) {
-        return nil;
-    }
+    NSParameterAssert(cipherData != nil);
+    NSParameterAssert(cipherData.length > 32 * 3 + 1);
+    NSParameterAssert(privateKey != nil);
+    NSParameterAssert(privateKey.length == 32);
     
     uint8_t *c1c3c2_bytes = (uint8_t *)cipherData.bytes;
     uint8_t *pri_text = (uint8_t *)privateKey.bytes;
@@ -113,9 +114,9 @@
 
 + (NSData *_Nullable)gm_sm2SignData:(NSData *)messageData
                      withPrivateKey:(NSData *)privateKey {
-    if (messageData.length == 0 || privateKey.length == 0 || privateKey.length != 32) {
-        return nil;
-    }
+    NSParameterAssert(messageData != nil);
+    NSParameterAssert(privateKey != nil);
+    NSParameterAssert(privateKey.length == 32);
     
     uint8_t *mes_bytes = (uint8_t *)messageData.bytes;
     uint8_t *pri_bytes = (uint8_t *)privateKey.bytes;
@@ -160,9 +161,11 @@
 + (BOOL)gm_sm2VerifySignature:(NSData *)signatureData
                       forData:(NSData *)messageData
                 withPublicKey:(NSData *)publicKey {
-    if (signatureData.length == 0 || signatureData.length != 64 || messageData.length == 0 || publicKey.length == 0 || publicKey.length != 64) {
-        return NO;
-    }
+    NSParameterAssert(signatureData != nil);
+    NSParameterAssert(signatureData.length == 64);
+    NSParameterAssert(messageData != nil);
+    NSParameterAssert(publicKey != nil);
+    NSParameterAssert(publicKey.length == 64);
     
     uint8_t *rs_bytes = (uint8_t *)signatureData.bytes;
     uint8_t *mes_bytes = (uint8_t *)messageData.bytes;

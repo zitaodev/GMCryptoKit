@@ -10,9 +10,7 @@
 @implementation GMSm3Digest
 
 + (NSData *_Nullable)gm_sm3DigestWithData:(NSData *)plaintextData {
-    if (plaintextData.length == 0) {
-        return nil;
-    }
+    NSParameterAssert(plaintextData != nil);
     // 原文
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     size_t plaintext_len = plaintextData.length;

@@ -10,10 +10,8 @@
 
 @implementation GMRandomGenerator
 
-+ (NSData *)gm_secRandomDataWithLength:(NSUInteger)length {
-    if (length == 0) {
-        return nil;
-    }
++ (NSData *_Nullable)gm_secRandomDataWithLength:(NSUInteger)length {
+    NSParameterAssert(length > 0);
     
     NSMutableData *data = [NSMutableData dataWithLength:length];
     int status = SecRandomCopyBytes(kSecRandomDefault, length, [data mutableBytes]);
