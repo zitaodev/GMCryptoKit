@@ -87,6 +87,8 @@
 		D8F00E562BA9319A0087333A /* libgmssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F00E152BA9319A0087333A /* libgmssl.a */; };
 		D8F00E572BA9319A0087333A /* libgmssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F00E152BA9319A0087333A /* libgmssl.a */; };
 		D8F00E582BA9319A0087333A /* libgmssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F00E152BA9319A0087333A /* libgmssl.a */; };
+		D8F00E5C2BA933B70087333A /* GMSm3Digest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F00E5A2BA933B70087333A /* GMSm3Digest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D8F00E5E2BA934080087333A /* GMSm3Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F00E592BA933B70087333A /* GMSm3Digest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +198,8 @@
 		D8F00E132BA9319A0087333A /* hash_drbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_drbg.h; sourceTree = "<group>"; };
 		D8F00E142BA9319A0087333A /* x509_ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_ext.h; sourceTree = "<group>"; };
 		D8F00E152BA9319A0087333A /* libgmssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmssl.a; sourceTree = "<group>"; };
+		D8F00E592BA933B70087333A /* GMSm3Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSm3Digest.m; sourceTree = "<group>"; };
+		D8F00E5A2BA933B70087333A /* GMSm3Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSm3Digest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +240,8 @@
 				D86EA4942BA5789800085EEA /* GMRandomGenerator.m */,
 				D86EA4922BA5789800085EEA /* GMSm2Cryptor.h */,
 				D86EA4952BA5789800085EEA /* GMSm2Cryptor.m */,
+				D8F00E5A2BA933B70087333A /* GMSm3Digest.h */,
+				D8F00E592BA933B70087333A /* GMSm3Digest.m */,
 			);
 			path = GMCryptoKit;
 			sourceTree = "<group>";
@@ -379,6 +385,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F00E5C2BA933B70087333A /* GMSm3Digest.h in Headers */,
 				D8F00E262BA9319A0087333A /* sm4_cl.h in Headers */,
 				D8F00E362BA9319A0087333A /* sha2.h in Headers */,
 				D8F00E2D2BA9319A0087333A /* pkcs8.h in Headers */,
@@ -581,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F00E5E2BA934080087333A /* GMSm3Digest.m in Sources */,
 				D86EA4992BA5789800085EEA /* GMSm2Cryptor.m in Sources */,
 				D86EA4982BA5789800085EEA /* GMRandomGenerator.m in Sources */,
 			);

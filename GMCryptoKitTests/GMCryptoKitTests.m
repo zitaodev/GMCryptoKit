@@ -75,22 +75,22 @@
         XCTAssertTrue(isSignatureValid, @"签名验签成功");
     }
     
-//    // 5、测试SM3提取摘要
-//    for (int i = 0; i < 1000; i++) {
-//        // 提取摘要
-//        NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:self.plaintextData];
-//        XCTAssertNotNil(digestData, @"摘要值不为空");
-//    }
+    // 5、测试SM3提取摘要
+    for (int i = 0; i < 1000; i++) {
+        // 提取摘要
+        NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:self.plaintextData];
+        XCTAssertNotNil(digestData, @"摘要值不为空");
+    }
 }
 
-//- (void)testPerformanceSm3Digest {
-//    NSData *plaintextData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
-//    [self measureBlock:^{
-//        // 提取摘要
-//        NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:plaintextData];
-//        XCTAssertTrue(digestData,  @"摘要值不为空");
-//    }];
-//}
+- (void)testPerformanceSm3Digest {
+    NSData *plaintextData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
+    [self measureBlock:^{
+        // 提取摘要
+        NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:plaintextData];
+        XCTAssertTrue(digestData,  @"摘要值不为空");
+    }];
+}
 
 - (void)testPerformanceSm2Verify {
     NSData *plaintextData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
