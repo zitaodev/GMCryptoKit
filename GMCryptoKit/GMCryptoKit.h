@@ -6,15 +6,7 @@
 //  Copyright © 2024 zitaodev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-//! Project version number for GMCryptoKit.
-FOUNDATION_EXPORT double GMCryptoKitVersionNumber;
-
-//! Project version string for GMCryptoKit.
-FOUNDATION_EXPORT const unsigned char GMCryptoKitVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <GMCryptoKit/PublicHeader.h>
+#define GMCRYPTOKIT_VERSION_STR    "GMCryptoKit 0.1.0"
 
 #import <GMCryptoKit/GMSm3Digest.h>
 #import <GMCryptoKit/GMSm2Cryptor.h>
