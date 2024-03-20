@@ -89,6 +89,7 @@
 		D8F00E582BA9319A0087333A /* libgmssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F00E152BA9319A0087333A /* libgmssl.a */; };
 		D8F00E5C2BA933B70087333A /* GMSm3Digest.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F00E5A2BA933B70087333A /* GMSm3Digest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8F00E5E2BA934080087333A /* GMSm3Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F00E592BA933B70087333A /* GMSm3Digest.m */; };
+		D8F00E622BAA6BF70087333A /* GMSm3DigestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F00E612BAA6BF70087333A /* GMSm3DigestTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 		D8F00E152BA9319A0087333A /* libgmssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmssl.a; sourceTree = "<group>"; };
 		D8F00E592BA933B70087333A /* GMSm3Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSm3Digest.m; sourceTree = "<group>"; };
 		D8F00E5A2BA933B70087333A /* GMSm3Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSm3Digest.h; sourceTree = "<group>"; };
+		D8F00E612BAA6BF70087333A /* GMSm3DigestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMSm3DigestTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				D86EA3DD2BA5720400085EEA /* GMCryptoKitTests.m */,
+				D8F00E612BAA6BF70087333A /* GMSm3DigestTests.m */,
 			);
 			path = GMCryptoKitTests;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D86EA3DE2BA5720400085EEA /* GMCryptoKitTests.m in Sources */,
+				D8F00E622BAA6BF70087333A /* GMSm3DigestTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
