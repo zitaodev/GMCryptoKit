@@ -11,6 +11,7 @@
 
 + (NSData *_Nullable)gm_sm3DigestWithData:(NSData *)plaintextData {
     NSParameterAssert(plaintextData != nil);
+    NSParameterAssert(plaintextData.length != 0);
     // 原文
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     size_t plaintext_len = plaintextData.length;
