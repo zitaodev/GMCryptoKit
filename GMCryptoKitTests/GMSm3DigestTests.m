@@ -47,4 +47,13 @@
     #pragma clang diagnostic pop
 }
 
+- (void)testPerformanceSm3Digest {
+    NSData *plaintextData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
+    [self measureBlock:^{
+        // 提取摘要
+        NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:plaintextData];
+        XCTAssertTrue(digestData,  @"SM3摘要值不能为空");
+    }];
+}
+
 @end
