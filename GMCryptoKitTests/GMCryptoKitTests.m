@@ -42,7 +42,7 @@
     // 1、测试生成的随机数不为空
     for (int i = 0; i < 1000; i++) {
         NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength: i + 1];
-        XCTAssertNotNil(randomData, @"生成的随机数不为空");
+        XCTAssertNotNil(randomData, @"生成的随机数不能为空");
     }
     
     // 2、测试生成的密钥对不为空
@@ -51,35 +51,35 @@
         NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
         NSData *publicKey = keyPair[@"publicKey"];
         NSData *privateKey = keyPair[@"privateKey"];
-        XCTAssertNotNil(publicKey, @"生成公钥不为空");
-        XCTAssertNotNil(privateKey, @"生成私钥不为空");
+        XCTAssertNotNil(publicKey, @"生成公钥不能为空");
+        XCTAssertNotNil(privateKey, @"生成私钥不能为空");
     }
     
     // 3、测试SM2加解密
     for (int i = 0; i < 1000; i++) {
         // 加密
         NSData *ciphertextData = [GMSm2Cryptor gm_sm2EncryptData:self.plaintextData withPublicKey:self.pubKey];
-        XCTAssertNotNil(ciphertextData, @"密文不为空");
+        XCTAssertNotNil(ciphertextData, @"密文不能为空");
         // 解密
         NSData *decryptedData = [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:self.priKey];
-        XCTAssertTrue([decryptedData isEqualToData:self.plaintextData], @"解密结果与原文一致");
+        XCTAssertTrue([decryptedData isEqualToData:self.plaintextData], @"解密结果与原文需一致");
     }
     
     // 4、测试SM2签名和验签
     for (int i = 0; i < 1000; i++) {
         // 数字签名
         NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:self.plaintextData withPrivateKey:self.priKey];
-        XCTAssertNotNil(signatureData, @"数字签名不为空");
+        XCTAssertNotNil(signatureData, @"数字签名不能为空");
         // 签名验签
         BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:self.plaintextData withPublicKey:self.pubKey];
-        XCTAssertTrue(isSignatureValid, @"签名验签成功");
+        XCTAssertTrue(isSignatureValid, @"签名验签需成功");
     }
     
     // 5、测试SM3提取摘要
     for (int i = 0; i < 1000; i++) {
         // 提取摘要
         NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:self.plaintextData];
-        XCTAssertNotNil(digestData, @"摘要值不为空");
+        XCTAssertNotNil(digestData, @"摘要值不能为空");
     }
 }
 
@@ -88,7 +88,7 @@
     [self measureBlock:^{
         // 提取摘要
         NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:plaintextData];
-        XCTAssertTrue(digestData,  @"摘要值不为空");
+        XCTAssertTrue(digestData,  @"摘要值不能为空");
     }];
 }
 
@@ -98,7 +98,7 @@
     [self measureBlock:^{
         // 签名验签
         BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:plaintextData withPublicKey:self.pubKey];
-        XCTAssertTrue(isSignatureValid, @"签名验签成功");
+        XCTAssertTrue(isSignatureValid, @"签名验签需成功");
     }];
 }
 
@@ -107,7 +107,7 @@
     [self measureBlock:^{
         // 数字签名
         NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:plaintextData withPrivateKey:self.priKey];
-        XCTAssertNotNil(signatureData, @"数字签名不为空");
+        XCTAssertNotNil(signatureData, @"数字签名不能为空");
     }];
 }
 
@@ -117,7 +117,7 @@
     [self measureBlock:^{
         // 解密
         NSData *decryptedData = [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:self.priKey];
-        XCTAssertTrue([decryptedData isEqualToData:plaintextData], @"解密结果与原文一致");
+        XCTAssertTrue([decryptedData isEqualToData:plaintextData], @"解密结果与原文需一致");
     }];
 }
 
@@ -126,7 +126,7 @@
     [self measureBlock:^{
         // 加密
         NSData *ciphertextData = [GMSm2Cryptor gm_sm2EncryptData:plaintextData withPublicKey:self.pubKey];
-        XCTAssertNotNil(ciphertextData, @"密文不为空");
+        XCTAssertNotNil(ciphertextData, @"密文不能为空");
     }];
 }
 
@@ -136,8 +136,8 @@
         NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
         NSData *publicKey = keyPair[@"publicKey"];
         NSData *privateKey = keyPair[@"privateKey"];
-        XCTAssertNotNil(publicKey, @"生成公钥不为空");
-        XCTAssertNotNil(privateKey, @"生成私钥不为空");
+        XCTAssertNotNil(publicKey, @"生成公钥不能为空");
+        XCTAssertNotNil(privateKey, @"生成私钥不能为空");
     }];
 }
 
@@ -146,7 +146,7 @@
         // 生成随机数
         NSUInteger length = 1 + arc4random() % 100;
         NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength:length];
-        XCTAssertNotNil(randomData, @"生成的随机数不为空");
+        XCTAssertNotNil(randomData, @"生成的随机数不能为空");
     }];
 }
 
