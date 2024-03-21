@@ -38,6 +38,7 @@
 + (NSData *_Nullable)gm_sm2EncryptData:(NSData *)plaintextData
                          withPublicKey:(NSData *)publicKey {
     NSParameterAssert(plaintextData != nil);
+    NSParameterAssert(plaintextData.length != 0);
     NSParameterAssert(publicKey != nil);
     NSParameterAssert(publicKey.length == 64);
     
@@ -115,6 +116,7 @@
 + (NSData *_Nullable)gm_sm2SignData:(NSData *)messageData
                      withPrivateKey:(NSData *)privateKey {
     NSParameterAssert(messageData != nil);
+    NSParameterAssert(messageData.length != 0);
     NSParameterAssert(privateKey != nil);
     NSParameterAssert(privateKey.length == 32);
     
@@ -164,6 +166,7 @@
     NSParameterAssert(signatureData != nil);
     NSParameterAssert(signatureData.length == 64);
     NSParameterAssert(messageData != nil);
+    NSParameterAssert(messageData.length != 0);
     NSParameterAssert(publicKey != nil);
     NSParameterAssert(publicKey.length == 64);
     
