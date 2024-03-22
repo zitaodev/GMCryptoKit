@@ -29,25 +29,22 @@
     NSData *publicKey = keyPair[@"publicKey"];
     NSData *privateKey = keyPair[@"privateKey"];
     
-    
-    // 加密和解密
+    // SM2加密和解密
     NSData *plaintextData = [GMRandomGenerator gm_secRandomDataWithLength:12];// 待加密的原文Data数据
     NSData *ciphertextData = [GMSm2Cryptor gm_sm2EncryptData:plaintextData withPublicKey:publicKey];
     NSData *decryptedData = [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:privateKey];
-    
-    [logStr appendString:@"\n-------SM2加密与解密-------"];
+    [logStr appendString:@"\n-------SM2加密和解密-------"];
     [logStr appendFormat:@"\nSM2明文：%@", plaintextData];
     [logStr appendFormat:@"\nSM2公钥：%@", publicKey];
     [logStr appendFormat:@"\nSM2私钥：%@", privateKey];
     [logStr appendFormat:@"\nSM2加密密文：%@", ciphertextData];
     [logStr appendFormat:@"\nSM2解密结果：%@", decryptedData];
     
-    // 数字签名和验证
+    // SM2数字签名和验证
     NSData *messageData = [GMRandomGenerator gm_secRandomDataWithLength:36]; // 待签名的数据
     NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:messageData withPrivateKey:privateKey];
     BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
-
-    [logStr appendString:@"\n-------SM2签名与验签-------"];
+    [logStr appendString:@"\n-------SM2数字签名和验证-------"];
     [logStr appendFormat:@"\nSM2签名消息：%@", messageData];
     [logStr appendFormat:@"\nSM2公钥：%@", publicKey];
     [logStr appendFormat:@"\nSM2私钥：%@", privateKey];
@@ -58,8 +55,17 @@
     NSData *mesData = [@"hello world!" dataUsingEncoding:NSUTF8StringEncoding];
     NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:mesData];
     [logStr appendString:@"\n-------SM3提取摘要-------"];
-    [logStr appendFormat:@"\nSM3待提取消息：%@", mesData];
+    [logStr appendFormat:@"\nSM3消息明文：%@", mesData];
     [logStr appendFormat:@"\nSM3摘要值：%@", digestData];
+    
+    // 基于SM3计算HMAC
+    NSData *hmacMesData = [@"hello world!" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *keyData = [GMRandomGenerator gm_secRandomDataWithLength:16];
+    NSData *hmacData = [GMSm3Digest gm_hmacSm3DigestWithData:hmacMesData keyData:keyData];
+    [logStr appendString:@"\n-------基于SM3计算HMAC-------"];
+    [logStr appendFormat:@"\nhmacSm3消息明文：%@", hmacMesData];
+    [logStr appendFormat:@"\nhmacSm3密钥：%@", keyData];
+    [logStr appendFormat:@"\nhmacSm3MAC值：%@", hmacData];
     
     NSLog(@"%@", logStr);
 }
