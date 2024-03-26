@@ -104,9 +104,8 @@
 }
 
 - (void)testPerformanceSm4Encrypt {
-//    NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//    assert(plaintextData != nil);
-    NSData *plaintextData = [self.plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    assert(plaintextData != nil);
     [self measureBlock:^{
         NSData *ciphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
         XCTAssertNotNil(ciphertextData, @"密文不能为空");
