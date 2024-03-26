@@ -18,9 +18,13 @@
 + (NSData *_Nullable)gm_sm4CbcPaddingEncryptData:(NSData *)plaintextData
                                          withKey:(NSData *)key
                                           withIv:(NSData *)iv {
-    if (plaintextData == nil || plaintextData.length == 0 || key == nil || key.length != 16 || iv == nil || iv.length != 16) {
-        return nil;
-    }
+    NSParameterAssert(plaintextData != nil);
+    NSParameterAssert(plaintextData.length != 0);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(key.length == 16);
+    NSParameterAssert(iv != nil);
+    NSParameterAssert(iv.length == 16);
+
     
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     uint8_t *key_bytes = (uint8_t *)key.bytes;
@@ -52,9 +56,12 @@
 + (NSData *_Nullable)gm_sm4CbcPaddingDecryptData:(NSData *)cipherData
                                          withKey:(NSData *)key
                                           withIv:(NSData *)iv {
-    if (cipherData == nil || cipherData.length == 0 || key == nil || key.length != 16 || iv == nil || iv.length != 16) {
-        return nil;
-    }
+    NSParameterAssert(cipherData != nil);
+    NSParameterAssert(cipherData.length != 0);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(key.length == 16);
+    NSParameterAssert(iv != nil);
+    NSParameterAssert(iv.length == 16);
     
     uint8_t *cipher_bytes = (uint8_t *)cipherData.bytes;
     uint8_t *key_bytes = (uint8_t *)key.bytes;
