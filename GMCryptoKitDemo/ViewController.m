@@ -67,6 +67,18 @@
     [logStr appendFormat:@"\nhmacSm3密钥：%@", keyData];
     [logStr appendFormat:@"\nhmacSm3MAC值：%@", hmacData];
     
+    // SM4加密和解密
+    NSData *sm4KeyData = [GMSm4Cryptor gm_createSm4Key];
+    NSData *sm4IvData = [GMSm4Cryptor gm_createSm4Key];
+    NSData *sm4CiphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:sm4KeyData withIv:sm4IvData];
+    NSData *sm4DecryptedData = [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:sm4CiphertextData withKey:sm4KeyData withIv:sm4IvData];
+    [logStr appendString:@"\n-------SM4加密和解密-------"];
+    [logStr appendFormat:@"\nSM4明文：%@", plaintextData];
+    [logStr appendFormat:@"\nSM4密钥：%@", sm4KeyData];
+    [logStr appendFormat:@"\nSM2IV：%@", sm4IvData];
+    [logStr appendFormat:@"\nSM4加密密文：%@", sm4CiphertextData];
+    [logStr appendFormat:@"\nSM4解密结果：%@", sm4DecryptedData];
+    
     NSLog(@"%@", logStr);
 }
 
