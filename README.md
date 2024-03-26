@@ -6,18 +6,17 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 
 ## 项目状态 
 
-目前项目正处于初始阶段，为即将到来的项目奠定基础。目前提供以下服务：
-
 ### 已完成功能：
 
-- **生成加密安全的随机数：** 通过 GMCryptoKit 库，您可以轻松生成加密安全的随机数。
-- **SM2 非对称加解密、数字签名和验证：** 实现了使用 SM2 算法进行非对称加解密、使用 SM2 算法实现数字签名、验签算法等功能。
+- **生成加密安全的随机数：**生成加密安全的随机数。
+- **SM2 非对称加解密、数字签名和验证：** 非对称加解密、数字签名、验签。
+- **SM3 摘要算法：**  提取摘要值、基于哈希的消息认证码（HMAC）。
+- **SM4 对称加密算法：** CBC模式（PKCS7Padding）对称加解密。
 
 ### 待完成功能：
 
-- **SM3 哈希算法：** 使用 SM3 哈希算法计算哈希值的功能。
-- **SM4 对称加密算法：** 使用 SM4 对称加密算法进行加解密的功能。
-- **SM9 加密算法：** 使用 SM9 加密算法进行加密和解密的功能。
+- **SM4 对称加密算法：** CBC（NOPadding）、ECB、CBC、CFB、OFB，CTR、GCM、CCM等模式。
+- **SM9 加密算法：**密钥生成、堆成加密解密、签名验证。
 
 ## 功能特性
 
@@ -28,6 +27,8 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 #### 使用示例：
 
 ```objective-c
+#import <GMCryptoKit/GMCryptoKit.h>
+
 // 生成指定字节的加密安全随机数
 NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength:16];
 ```
@@ -39,21 +40,68 @@ GMCryptoKit提供了对SM2算法的支持，包括密钥对生成、加密、解
 #### 使用示例：
 
 ```objective-c
+#import <GMCryptoKit/GMCryptoKit.h>
+
 // 生成SM2密钥对
 NSDictionary *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
 NSData *publicKey = keyPair[@"publicKey"];
 NSData *privateKey = keyPair[@"privateKey"];
 
-// 加密和解密
-NSData *plaintextData = [GMRandomGenerator gm_secRandomDataWithLength:12];
+// SM2加密和解密
+NSData *plaintextData = [GMRandomGenerator gm_secRandomDataWithLength:16];
 NSData *ciphertextData = [GMSm2Cryptor gm_sm2EncryptData:plaintextData withPublicKey:publicKey];
 NSData *decryptedData = [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:privateKey];
 
-// 数字签名和验证
-NSData *messageData = [GMRandomGenerator gm_secRandomDataWithLength:36]; // 待签名的数据
+// SM2数字签名和验证
+NSData *messageData = [GMRandomGenerator gm_secRandomDataWithLength:36];
 NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:messageData withPrivateKey:privateKey];
 BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
 ```
+
+### 3. SM3提取摘要
+
+GMCryptoKit提供了对SM3算法的支持，包括提取摘要、基于哈希的消息认证码（HMAC）等功能。
+
+#### 使用示例：
+
+```objective-c
+#import <GMCryptoKit/GMCryptoKit.h>
+
+// SM3 提取摘要值
+NSString *inputString = @"hello world!";
+NSData *inputData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+NSData *hashValue = [GMSm3Digest gm_sm3DigestWithData:mesData];
+
+// 基于SM3计算HMAC
+NSString *key = @"mySecretKey";
+NSString *inputString = @"hello world!";
+NSData *inputData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+NSData *hmacValue = [GMSm3Digest gm_hmacSm3DigestWithData:inputData keyData:key];
+```
+
+### 4. SM4 对称加解密
+
+GMCryptoKit提供了对SM4算法的支持，包括生成密钥、CBC模式加解密等功能。
+
+#### 使用示例：
+
+```objective-c
+#import <GMCryptoKit/GMCryptoKit.h>
+
+// SM4 生成密钥
+NSData *key = [GMSm4Cryptor gm_createSm4Key];
+NSData *iv = [GMSm4Cryptor gm_createSm4Key]; 
+
+// SM4 CBC模式加密
+NSString *inputString = @"hello, world!";
+NSData *inputData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
+NSData *encryptedData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:inputData withKey:key withIv:iv];
+
+// SM4 CBC模式解密
+NSData *decryptedData =[GMSm4Cryptor gm_sm4CbcPaddingDecryptData:encryptedData withKey:key withIv:iv];
+```
+
+
 
 ## 环境要求
 
