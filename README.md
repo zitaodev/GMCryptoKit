@@ -8,19 +8,19 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 
 ### 已完成功能：
 
-- **生成加密安全的随机数：**生成加密安全的随机数。
-- **SM2 非对称加解密、数字签名和验证：** 非对称加解密、数字签名、验签。
+- **生成加密安全的随机数：** 生成加密安全的随机数。
+- **SM2 非对称加密算法：** 非对称加解密、数字签名、验签。
 - **SM3 摘要算法：**  提取摘要值、基于哈希的消息认证码（HMAC）。
 - **SM4 对称加密算法：** CBC模式（PKCS7Padding）对称加解密。
 
 ### 待完成功能：
 
 - **SM4 对称加密算法：** CBC（NOPadding）、ECB、CBC、CFB、OFB，CTR、GCM、CCM等模式。
-- **SM9 加密算法：**密钥生成、堆成加密解密、签名验证。
+- **SM9 标识密码算法：**  密钥生成、堆成加密解密、签名验证。
 
 ## 功能特性
 
-### 1. 随机数生成
+### 1. 加密安全的随机数
 
 通过GMCryptoKit，你可以轻松生成指定字节长度的加密安全的随机数，可用于密钥生成、初始化向量等场景。
 
@@ -33,7 +33,7 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength:16];
 ```
 
-### 2. 非对称国密算法SM2
+### 2. SM2 算法
 
 GMCryptoKit提供了对SM2算法的支持，包括密钥对生成、加密、解密、数字签名和验证等功能。
 
@@ -58,7 +58,7 @@ NSData *signatureData = [GMSm2Cryptor gm_sm2SignData:messageData withPrivateKey:
 BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
 ```
 
-### 3. SM3提取摘要
+### 3. SM3 算法
 
 GMCryptoKit提供了对SM3算法的支持，包括提取摘要、基于哈希的消息认证码（HMAC）等功能。
 
@@ -79,7 +79,7 @@ NSData *inputData = [inputString dataUsingEncoding:NSUTF8StringEncoding];
 NSData *hmacValue = [GMSm3Digest gm_hmacSm3DigestWithData:inputData keyData:key];
 ```
 
-### 4. SM4 对称加解密
+### 4. SM4 算法
 
 GMCryptoKit提供了对SM4算法的支持，包括生成密钥、CBC模式加解密等功能。
 
