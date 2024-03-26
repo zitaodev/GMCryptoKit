@@ -25,28 +25,29 @@
     NSParameterAssert(iv != nil);
     NSParameterAssert(iv.length == 16);
 
-    
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
-    uint8_t *key_bytes = (uint8_t *)key.bytes;
-    uint8_t *iv_bytes = (uint8_t *)iv.bytes;
-    
     size_t plaintext_len = plaintextData.length;
+    
+    uint8_t *key_bytes = (uint8_t *)key.bytes;
     size_t key_len = key.length;
+    
+    uint8_t *iv_bytes = (uint8_t *)iv.bytes;
     size_t iv_len = iv.length;
     
-    SM4_KEY sm4_key;
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
     
     u_int8_t raw_iv[iv_len];
     memcpy(raw_iv, iv_bytes, iv_len);
     
+    SM4_KEY sm4_key;
     sm4_set_encrypt_key(&sm4_key, raw_key);
 
-    unsigned char cbuf[plaintext_len + SM4_BLOCK_SIZE];
-    size_t clen;
-    sm4_cbc_padding_encrypt(&sm4_key, raw_iv, plaintext_bytes, plaintext_len, cbuf, &clen);
-    NSData *cipher_data = [NSData dataWithBytes:cbuf length:clen];
+    unsigned char cipher_buf[plaintext_len + SM4_BLOCK_SIZE];
+    size_t cipher_len;
+    sm4_cbc_padding_encrypt(&sm4_key, raw_iv, plaintext_bytes, plaintext_len, cipher_buf, &cipher_len);
+    
+    NSData *cipher_data = [NSData dataWithBytes:cipher_buf length:cipher_len];
     if (!cipher_data || cipher_data.length == 0) {
         return nil;
     }
@@ -64,31 +65,32 @@
     NSParameterAssert(iv.length == 16);
     
     uint8_t *cipher_bytes = (uint8_t *)cipherData.bytes;
-    uint8_t *key_bytes = (uint8_t *)key.bytes;
-    uint8_t *iv_bytes = (uint8_t *)iv.bytes;
-    
     size_t cipher_len = cipherData.length;
+    
+    uint8_t *key_bytes = (uint8_t *)key.bytes;
     size_t key_len = key.length;
+    
+    uint8_t *iv_bytes = (uint8_t *)iv.bytes;
     size_t iv_len = iv.length;
     
-    SM4_KEY sm4_key;
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
     
     u_int8_t raw_iv[iv_len];
     memcpy(raw_iv, iv_bytes, iv_len);
     
+    SM4_KEY sm4_key;
     sm4_set_decrypt_key(&sm4_key, raw_key);
 
-    unsigned char pbuf[cipher_len];
-    size_t plen;
-    sm4_cbc_padding_decrypt(&sm4_key, raw_iv, cipher_bytes, cipher_len, pbuf, &plen);
+    unsigned char plaintext_buf[cipher_len];
+    size_t plaintext_len;
+    sm4_cbc_padding_decrypt(&sm4_key, raw_iv, cipher_bytes, cipher_len, plaintext_buf, &plaintext_len);
     
-    NSData *cipher_data = [NSData dataWithBytes:pbuf length:plen];
-    if (!cipher_data || cipher_data.length == 0) {
+    NSData *plaintext_data = [NSData dataWithBytes:plaintext_buf length:plaintext_len];
+    if (!plaintext_data || plaintext_data.length == 0) {
         return nil;
     }
-    return cipher_data;
+    return plaintext_data;
 }
 
 
