@@ -33,11 +33,15 @@
     SM4_KEY sm4_key;
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
+    
+    u_int8_t raw_iv[iv_len];
+    memcpy(raw_iv, iv_bytes, iv_len);
+    
     sm4_set_encrypt_key(&sm4_key, raw_key);
 
     unsigned char cbuf[plaintext_len + SM4_BLOCK_SIZE];
     size_t clen;
-    sm4_cbc_padding_encrypt(&sm4_key, iv_bytes, plaintext_bytes, plaintext_len, cbuf, &clen);
+    sm4_cbc_padding_encrypt(&sm4_key, raw_iv, plaintext_bytes, plaintext_len, cbuf, &clen);
     NSData *cipher_data = [NSData dataWithBytes:cbuf length:clen];
     if (!cipher_data || cipher_data.length == 0) {
         return nil;
@@ -63,29 +67,16 @@
     SM4_KEY sm4_key;
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
+    
+    u_int8_t raw_iv[iv_len];
+    memcpy(raw_iv, iv_bytes, iv_len);
+    
     sm4_set_decrypt_key(&sm4_key, raw_key);
 
     unsigned char pbuf[cipher_len];
     size_t plen;
-    sm4_cbc_padding_decrypt(&sm4_key, iv_bytes, cipher_bytes, cipher_len, pbuf, &plen);
-
-    // 移除PKCS#7填充
-    // 参考:https://github.com/guanzhi/GmSSL/issues/1483
-    unsigned char padding_count = pbuf[plen - 1];
-    uint8_t count = 0;
-    uint8_t i = 0;
-
-    for(i= plen - padding_count; i < plen; i++) {
-        if(pbuf[i] != padding_count) {
-            break;
-        } else { count ++; }
-    }
-
-    if (count != padding_count) return nil;
-    for(i= plen - padding_count; i < plen; i++) {
-        pbuf[i] = 0;
-    }
-
+    sm4_cbc_padding_decrypt(&sm4_key, raw_iv, cipher_bytes, cipher_len, pbuf, &plen);
+    
     NSData *cipher_data = [NSData dataWithBytes:pbuf length:plen];
     if (!cipher_data || cipher_data.length == 0) {
         return nil;
