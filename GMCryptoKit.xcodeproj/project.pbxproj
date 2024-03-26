@@ -21,6 +21,8 @@
 		D895A14A2BA292A600181276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D895A1492BA292A600181276 /* main.m */; };
 		D8CD055C2BAA886500E240A1 /* GMRandomGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D8CD055B2BAA886500E240A1 /* GMRandomGeneratorTests.m */; };
 		D8CD055E2BAAB58300E240A1 /* GMSm2CryptorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D8CD055D2BAAB58300E240A1 /* GMSm2CryptorTests.m */; };
+		D8CD057C2BB27C3000E240A1 /* GMSm4Cryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CD057A2BB27C3000E240A1 /* GMSm4Cryptor.h */; };
+		D8CD057D2BB27C3000E240A1 /* GMSm4Cryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = D8CD057B2BB27C3000E240A1 /* GMSm4Cryptor.m */; };
 		D8F00E162BA9319A0087333A /* pem.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F00DD52BA9319A0087333A /* pem.h */; };
 		D8F00E172BA9319A0087333A /* sm2_commit.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F00DD62BA9319A0087333A /* sm2_commit.h */; };
 		D8F00E182BA9319A0087333A /* error.h in Headers */ = {isa = PBXBuildFile; fileRef = D8F00DD72BA9319A0087333A /* error.h */; };
@@ -136,6 +138,8 @@
 		D895A1492BA292A600181276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D8CD055B2BAA886500E240A1 /* GMRandomGeneratorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMRandomGeneratorTests.m; sourceTree = "<group>"; };
 		D8CD055D2BAAB58300E240A1 /* GMSm2CryptorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMSm2CryptorTests.m; sourceTree = "<group>"; };
+		D8CD057A2BB27C3000E240A1 /* GMSm4Cryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMSm4Cryptor.h; sourceTree = "<group>"; };
+		D8CD057B2BB27C3000E240A1 /* GMSm4Cryptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMSm4Cryptor.m; sourceTree = "<group>"; };
 		D8F00DD52BA9319A0087333A /* pem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem.h; sourceTree = "<group>"; };
 		D8F00DD62BA9319A0087333A /* sm2_commit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sm2_commit.h; sourceTree = "<group>"; };
 		D8F00DD72BA9319A0087333A /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 				D86EA4952BA5789800085EEA /* GMSm2Cryptor.m */,
 				D8F00E5A2BA933B70087333A /* GMSm3Digest.h */,
 				D8F00E592BA933B70087333A /* GMSm3Digest.m */,
+				D8CD057A2BB27C3000E240A1 /* GMSm4Cryptor.h */,
+				D8CD057B2BB27C3000E240A1 /* GMSm4Cryptor.m */,
 			);
 			path = GMCryptoKit;
 			sourceTree = "<group>";
@@ -416,6 +422,7 @@
 				D8F00E522BA9319A0087333A /* sm2_key_share.h in Headers */,
 				D8F00E292BA9319A0087333A /* hkdf.h in Headers */,
 				D8F00E2E2BA9319A0087333A /* x509_cer.h in Headers */,
+				D8CD057C2BB27C3000E240A1 /* GMSm4Cryptor.h in Headers */,
 				D8F00E472BA9319A0087333A /* aead.h in Headers */,
 				D8F00E222BA9319A0087333A /* base64.h in Headers */,
 				D86EA49B2BA5799100085EEA /* GMSm2Cryptor.h in Headers */,
@@ -594,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8CD057D2BB27C3000E240A1 /* GMSm4Cryptor.m in Sources */,
 				D8F00E5E2BA934080087333A /* GMSm3Digest.m in Sources */,
 				D86EA4992BA5789800085EEA /* GMSm2Cryptor.m in Sources */,
 				D86EA4982BA5789800085EEA /* GMRandomGenerator.m in Sources */,
