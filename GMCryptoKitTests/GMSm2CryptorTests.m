@@ -14,7 +14,6 @@
 @property (nonatomic, copy) NSData *publicKeyData;  // 公钥
 @property (nonatomic, copy) NSData *privateKeyData;  // 私钥
 @property (nonatomic, copy) NSString *plaintext;   // 预置原文,UTF8编码
-@property (nonatomic, copy) NSString *cyphertext;  // 预置摘要,Base64编码
 
 @end
 

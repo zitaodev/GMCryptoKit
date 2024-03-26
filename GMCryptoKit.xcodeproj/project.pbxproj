@@ -261,10 +261,10 @@
 		D86EA3DC2BA5720400085EEA /* GMCryptoKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				D8F00E612BAA6BF70087333A /* GMSm3DigestTests.m */,
-				D8CD055B2BAA886500E240A1 /* GMRandomGeneratorTests.m */,
-				D8CD055D2BAAB58300E240A1 /* GMSm2CryptorTests.m */,
 				D8CD057E2BB2A28800E240A1 /* GMSm4CryptorTests.m */,
+				D8F00E612BAA6BF70087333A /* GMSm3DigestTests.m */,
+				D8CD055D2BAAB58300E240A1 /* GMSm2CryptorTests.m */,
+				D8CD055B2BAA886500E240A1 /* GMRandomGeneratorTests.m */,
 			);
 			path = GMCryptoKitTests;
 			sourceTree = "<group>";

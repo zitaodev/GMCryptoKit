@@ -14,7 +14,6 @@
 @property (nonatomic, copy) NSData *keyData;  // 密钥
 @property (nonatomic, copy) NSData *iVData;   // 初始化向量
 @property (nonatomic, copy) NSString *plaintext;   // 预置原文,Base64编码
-@property (nonatomic, copy) NSString *cyphertext;  // 预置密文,Base64编码
 
 @end
 
@@ -24,14 +23,12 @@
     self.keyData = [GMSm4Cryptor gm_createSm4Key];
     self.iVData = [GMSm4Cryptor gm_createSm4Key];
     self.plaintext = @"R01TbTRDcnlwdG9yJkNvcHlyaWdodCDCqSAyMDI0IHppdGFvZGV2LiBBbGwgcmlnaHRzIHJlc2VydmVkLiZHTUNyeXB0b0tpdCAwLjEuMA==";
-    self.cyphertext = @"PJ93tZNVt3ayDfmy3BWiWWsdS6WjRKB3lQ+lYHOxIRNPKhY/c39FBWwvV1r6vMGcedI97fGmkZx8Z/7VIrL1iiW0nCtPStFsxMyMtKEEZXc=";
 }
 
 - (void)tearDown {
     self.keyData = nil;
     self.iVData = nil;
     self.plaintext = nil;
-    self.cyphertext = nil;
 }
 
 - (void)testSm4CryptorDecryption {
@@ -107,8 +104,9 @@
 }
 
 - (void)testPerformanceSm4Encrypt {
-    NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    assert(plaintextData != nil);
+//    NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//    assert(plaintextData != nil);
+    NSData *plaintextData = [self.plaintext dataUsingEncoding:NSUTF8StringEncoding];
     [self measureBlock:^{
         NSData *ciphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
         XCTAssertNotNil(ciphertextData, @"密文不能为空");
