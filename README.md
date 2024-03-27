@@ -16,7 +16,7 @@ GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封�
 ### 待完成功能：
 
 - **SM4 对称加密算法：** CBC（NOPadding）、ECB、CBC、CFB、OFB，CTR、GCM、CCM等模式。
-- **SM9 标识密码算法：**  密钥生成、堆成加密解密、签名验证。
+- **SM9 标识密码算法：**  密钥生成、加解密、签名验证。
 
 ## 功能特性
 
