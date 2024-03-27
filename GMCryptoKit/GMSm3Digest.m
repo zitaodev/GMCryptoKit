@@ -22,7 +22,7 @@
     uint8_t *key_bytes = (uint8_t *)keyData.bytes;
     size_t key_len = keyData.length;
     
-    unsigned char hmac[SM3_HMAC_SIZE];
+    uint8_t hmac[SM3_HMAC_SIZE];
     memset(hmac, 0, SM3_HMAC_SIZE);
     
     // 计算摘要
@@ -43,7 +43,7 @@
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     size_t plaintext_len = plaintextData.length;
     // 摘要结果
-    unsigned char dgst[SM3_DIGEST_SIZE];
+    uint8_t dgst[SM3_DIGEST_SIZE];
     memset(dgst, 0, SM3_DIGEST_SIZE);
     
     // 计算摘要

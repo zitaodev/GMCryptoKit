@@ -21,9 +21,9 @@
     NSParameterAssert(plaintextData != nil);
     NSParameterAssert(plaintextData.length != 0);
     NSParameterAssert(key != nil);
-    NSParameterAssert(key.length == 16);
+    NSParameterAssert(key.length == SM4_KEY_SIZE);
     NSParameterAssert(iv != nil);
-    NSParameterAssert(iv.length == 16);
+    NSParameterAssert(iv.length == SM4_KEY_SIZE);
 
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     size_t plaintext_len = plaintextData.length;
@@ -43,7 +43,7 @@
     SM4_KEY sm4_key;
     sm4_set_encrypt_key(&sm4_key, raw_key);
 
-    unsigned char cipher_buf[plaintext_len + SM4_BLOCK_SIZE];
+    uint8_t cipher_buf[plaintext_len + SM4_BLOCK_SIZE];
     size_t cipher_len;
     sm4_cbc_padding_encrypt(&sm4_key, raw_iv, plaintext_bytes, plaintext_len, cipher_buf, &cipher_len);
     
@@ -60,9 +60,9 @@
     NSParameterAssert(cipherData != nil);
     NSParameterAssert(cipherData.length != 0);
     NSParameterAssert(key != nil);
-    NSParameterAssert(key.length == 16);
+    NSParameterAssert(key.length == SM4_KEY_SIZE);
     NSParameterAssert(iv != nil);
-    NSParameterAssert(iv.length == 16);
+    NSParameterAssert(iv.length == SM4_KEY_SIZE);
     
     uint8_t *cipher_bytes = (uint8_t *)cipherData.bytes;
     size_t cipher_len = cipherData.length;
@@ -82,7 +82,7 @@
     SM4_KEY sm4_key;
     sm4_set_decrypt_key(&sm4_key, raw_key);
 
-    unsigned char plaintext_buf[cipher_len];
+    uint8_t plaintext_buf[cipher_len];
     size_t plaintext_len;
     sm4_cbc_padding_decrypt(&sm4_key, raw_iv, cipher_bytes, cipher_len, plaintext_buf, &plaintext_len);
     
