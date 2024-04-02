@@ -1,5 +1,7 @@
 # GMCryptoKit
 
+[TOC]
+
 ## 概述
 
 GMCryptoKit是一个基于[GmSSL](https://github.com/guanzhi/GmSSL)开源库封装的Objective-C国密算法组件，旨在为 iOS 开发者提供国密算法的实现。该密码组建支持生成加密安全的随机数和国密算法（SM2/SM3/SM4/SM9），为 iOS 应用提供了密码学安全的功能支持。
