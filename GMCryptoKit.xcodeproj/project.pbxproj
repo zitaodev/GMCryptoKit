@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D81503B12BCCF85A00960290 /* GMCryptoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D81503B02BCCF85A00960290 /* GMCryptoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D81503B62BCD143100960290 /* GMUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D81503B42BCD143100960290 /* GMUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D81503B72BCD143100960290 /* GMUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D81503B52BCD143100960290 /* GMUtilities.m */; };
 		D86EA3D72BA5720400085EEA /* GMCryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86EA3CF2BA5720400085EEA /* GMCryptoKit.framework */; };
 		D86EA3E22BA5720500085EEA /* GMCryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86EA3CF2BA5720400085EEA /* GMCryptoKit.framework */; };
 		D86EA4982BA5789800085EEA /* GMRandomGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D86EA4942BA5789800085EEA /* GMRandomGenerator.m */; };
@@ -122,6 +124,8 @@
 
 /* Begin PBXFileReference section */
 		D81503B02BCCF85A00960290 /* GMCryptoKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMCryptoKit.h; sourceTree = "<group>"; };
+		D81503B42BCD143100960290 /* GMUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUtilities.h; sourceTree = "<group>"; };
+		D81503B52BCD143100960290 /* GMUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMUtilities.m; sourceTree = "<group>"; };
 		D86EA3CF2BA5720400085EEA /* GMCryptoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GMCryptoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86EA3D62BA5720400085EEA /* GMCryptoKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GMCryptoKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D86EA4922BA5789800085EEA /* GMSm2Cryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSm2Cryptor.h; sourceTree = "<group>"; };
@@ -254,6 +258,8 @@
 				D8F00E592BA933B70087333A /* GMSm3Digest.m */,
 				D8CD057A2BB27C3000E240A1 /* GMSm4Cryptor.h */,
 				D8CD057B2BB27C3000E240A1 /* GMSm4Cryptor.m */,
+				D81503B42BCD143100960290 /* GMUtilities.h */,
+				D81503B52BCD143100960290 /* GMUtilities.m */,
 			);
 			path = GMCryptoKit;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				D8F00E5C2BA933B70087333A /* GMSm3Digest.h in Headers */,
 				D8F00E262BA9319A0087333A /* sm4_cl.h in Headers */,
 				D8F00E362BA9319A0087333A /* sha2.h in Headers */,
+				D81503B62BCD143100960290 /* GMUtilities.h in Headers */,
 				D81503B12BCCF85A00960290 /* GMCryptoKit.h in Headers */,
 				D8F00E2D2BA9319A0087333A /* pkcs8.h in Headers */,
 				D86EA49A2BA5799100085EEA /* GMRandomGenerator.h in Headers */,
@@ -606,6 +613,7 @@
 			files = (
 				D8CD057D2BB27C3000E240A1 /* GMSm4Cryptor.m in Sources */,
 				D8F00E5E2BA934080087333A /* GMSm3Digest.m in Sources */,
+				D81503B72BCD143100960290 /* GMUtilities.m in Sources */,
 				D86EA4992BA5789800085EEA /* GMSm2Cryptor.m in Sources */,
 				D86EA4982BA5789800085EEA /* GMRandomGenerator.m in Sources */,
 			);
