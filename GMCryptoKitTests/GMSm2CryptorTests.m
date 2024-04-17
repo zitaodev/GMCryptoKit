@@ -20,7 +20,7 @@
 @implementation GMSm2CryptorTests
 
 - (void)setUp {
-    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
+    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2DataKeyPair];
     self.publicKeyData = keyPair[@"publicKey"];
     self.privateKeyData = keyPair[@"privateKey"];
     self.plaintext = @"Copyright © 2024 zitaodev. All rights reserved.";
@@ -113,7 +113,7 @@
 }
 
 - (void)testSm2CryptorCreateKeyPair {
-    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
+    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2DataKeyPair];
     NSData *publicKey = keyPair[@"publicKey"];
     NSData *privateKey = keyPair[@"privateKey"];
     XCTAssertNotNil(publicKey, @"生成公钥不能为空");
@@ -172,7 +172,7 @@
 
 - (void)testPerformanceSm2KeyPairGenerate {
     [self measureBlock:^{
-        NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2KeyPair];
+        NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor gm_createSm2DataKeyPair];
         NSData *publicKeyData = keyPair[@"publicKey"];
         NSData *privateKeyData = keyPair[@"privateKey"];
         XCTAssertNotNil(publicKeyData, @"生成公钥不能为空");

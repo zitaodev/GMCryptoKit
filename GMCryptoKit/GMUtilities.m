@@ -2,7 +2,7 @@
 //  GMUtilities.m
 //  GMCryptoKit
 //
-//  Created by Joe's Laptop on 2024/4/15.
+//  Created by zitaodev's Laptop on 2024/4/15.
 //  Copyright © 2024 zitaodev. All rights reserved.
 //
 
@@ -67,7 +67,7 @@
             hexString = [NSString stringWithFormat:@"%@%@",hexString,newHexString];
         }
     }
-    return hexString;
+    return [hexString uppercaseString];
 }
 
 + (NSData *_Nullable)hexStringToData:(NSString *)hexString {
