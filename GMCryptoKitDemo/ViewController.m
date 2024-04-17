@@ -65,7 +65,7 @@
     [logStr appendFormat:@"\nSM2解密结果：%@", decryptedtext];
     
     // SM2数字签名和验证
-    NSString *message = @"sm2 encrypt text: Copyright © 2024 zitaodev. All rights reserved.";
+    NSString *message = @"sm2 sign text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *hexMessage = [GMUtilities stringToHexString:message];
     NSData   *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64Signature = [GMSm2Cryptor gm_sm2SignText:message withBase64PrivateKey:privateKeyBase64];
@@ -88,20 +88,40 @@
     [logStr appendFormat:@"\nSM2验签结果：%@", @(isSignatureValid)];
     
     // SM3提取摘要
-    NSData *mesData = [@"hello world!" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:mesData];
+    NSString *sm3message = @"sm3 digest text: Copyright © 2024 zitaodev. All rights reserved.";
+    NSString *hexSm3Message = [GMUtilities stringToHexString:sm3message];
+    NSData   *sm3messageData = [sm3message dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64Digest = [GMSm3Digest gm_sm3DigestWithText:sm3message];
+    NSString *hexDigest = [GMSm3Digest gm_sm3DigestWithHexText:hexSm3Message];
+    NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:sm3messageData];
+    if (base64Digest && hexDigest && digestData) {
+        NSLog(@"SM3提取摘要成功");
+    }else {
+        NSLog(@"SM3提取摘要失败");
+    }
     [logStr appendString:@"\n-------SM3提取摘要-------"];
-    [logStr appendFormat:@"\nSM3消息明文：%@", mesData];
-    [logStr appendFormat:@"\nSM3摘要值：%@", digestData];
+    [logStr appendFormat:@"\nSM3消息明文：%@", sm3message];
+    [logStr appendFormat:@"\nSM3摘要值：%@", base64Digest];
     
     // 基于SM3计算HMAC
-    NSData *hmacMesData = [@"hello world!" dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *sm3HmacMessage = @"sm3 hmac text: Copyright © 2024 zitaodev. All rights reserved.";
+    NSString *hexSm3HmacMessage = [GMUtilities stringToHexString:sm3HmacMessage];
+    NSData   *sm3HmacMessageData = [sm3HmacMessage dataUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [GMRandomGenerator gm_secRandomDataWithLength:16];
-    NSData *hmacData = [GMSm3Digest gm_hmacSm3DigestWithData:hmacMesData keyData:keyData];
+    NSString *base64Key = [GMUtilities dataToBase64String:keyData];
+    NSString *hexKey = [GMUtilities dataToHexString:keyData];
+    NSString *base64Hmac = [GMSm3Digest gm_hmacSm3DigestWithText:sm3HmacMessage base64Key:base64Key];
+    NSString *hexHmac = [GMSm3Digest gm_hmacSm3DigestWithHexText:hexSm3HmacMessage hexKey:hexKey];
+    NSData *hmacData = [GMSm3Digest gm_hmacSm3DigestWithData:sm3HmacMessageData keyData:keyData];
+    if (base64Hmac && hexHmac && hmacData) {
+        NSLog(@"基于SM3计算HMAC成功");
+    }else {
+        NSLog(@"基于SM3计算HMAC失败");
+    }
     [logStr appendString:@"\n-------基于SM3计算HMAC-------"];
-    [logStr appendFormat:@"\nhmacSm3消息明文：%@", hmacMesData];
+    [logStr appendFormat:@"\nhmacSm3消息明文：%@", sm3HmacMessage];
     [logStr appendFormat:@"\nhmacSm3密钥：%@", keyData];
-    [logStr appendFormat:@"\nhmacSm3MAC值：%@", hmacData];
+    [logStr appendFormat:@"\nhmacSm3MAC值：%@", base64Hmac];
     
     // SM4加密和解密
     NSData *sm4KeyData = [GMSm4Cryptor gm_createSm4Key];
