@@ -17,11 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param plaintext     NSString类型待计算数据（UTF-8编码）
         hexPlaintext  NSString类型待计算数据（Hex编码）
         plaintextData NSData类型待计算数据  （UTF-8编码）
- @return 返回值：成功则返回摘要值，分别是：
-        NSString类型摘要值（Base64编码）
-        NSString类型摘要h值（Hex格式）
-        NSData类型摘要值  （UTF-8编码）
-        失败则返回nil
+ @return 成功则返回摘要值，分别是：
+         NSString类型摘要值（Base64编码）
+         NSString类型摘要值（Hex格式）
+         NSData类型摘要值  （UTF-8编码）
+         失败则返回nil
  */
 + (NSString *_Nullable)gm_sm3DigestWithText:(NSString *)plaintext;
 + (NSString *_Nullable)gm_sm3DigestWithHexText:(NSString *)hexPlaintext;
@@ -36,11 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param base64Key     NSString类型密钥（Base64编码）
         hexKey        NSString类型密钥（Hex编码）
         keyData       NSData类型密钥  （UTF-8编码）
- @return 返回值：成功则返回HMAC值，分别是：
+ @return 成功则返回HMAC值，分别是：
          NSString类型HMAC值（Base64编码）
          NSString类型HMAC值（Hex编码）
          NSData类型HMAC值  （UTF-8编码）
- 失败则返回nil
+         失败则返回nil
  */
 + (NSString *_Nullable)gm_hmacSm3DigestWithText:(NSString *)plaintext
                                       base64Key:(NSString *)base64Key;
