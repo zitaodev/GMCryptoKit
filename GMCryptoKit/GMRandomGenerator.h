@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param length 指定的随机数长度
  @return 填充指定字节长度的NSData格式随机数
  */
-+ (NSData *_Nullable)gm_secRandomDataWithLength:(NSUInteger)length;
++ (NSData *_Nullable)secRandomDataWithLength:(NSUInteger)length;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,7 @@
 
 @implementation GMRandomGenerator
 
-+ (NSData *_Nullable)gm_secRandomDataWithLength:(NSUInteger)length {
++ (NSData *_Nullable)secRandomDataWithLength:(NSUInteger)length {
     NSParameterAssert(length > 0);
     
     NSMutableData *data = [NSMutableData dataWithLength:length];

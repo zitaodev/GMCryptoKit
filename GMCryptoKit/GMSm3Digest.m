@@ -14,23 +14,23 @@
 
 #pragma mark - 基于SM3算法的HMAC计算
 
-+ (NSString *_Nullable)gm_hmacSm3DigestWithText:(NSString *)plaintext
++ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext
                                       base64Key:(NSString *)base64Key {
     NSData *plaintextData = [GMUtilities stringToData:plaintext];
     NSData *keyData = [GMUtilities base64StringToData:base64Key];
-    NSData *hmacData = [self gm_hmacSm3DigestWithData:plaintextData keyData:keyData];
+    NSData *hmacData = [self hmacSm3DigestWithData:plaintextData keyData:keyData];
     return [GMUtilities dataToBase64String:hmacData];
 }
 
-+ (NSString *_Nullable)gm_hmacSm3DigestWithHexText:(NSString *)hexPlaintext
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)hexPlaintext
                                             hexKey:(NSString *)hexKey {
     NSData *plaintextData = [GMUtilities hexStringToData:hexPlaintext];
     NSData *keyData = [GMUtilities hexStringToData:hexKey];
-    NSData *hmacData = [self gm_hmacSm3DigestWithData:plaintextData keyData:keyData];
+    NSData *hmacData = [self hmacSm3DigestWithData:plaintextData keyData:keyData];
     return [GMUtilities dataToHexString:hmacData];
 }
 
-+ (NSData *_Nullable)gm_hmacSm3DigestWithData:(NSData *)plaintextData
++ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plaintextData
                                       keyData:(NSData *)keyData {
     NSParameterAssert(plaintextData != nil);
     NSParameterAssert(plaintextData.length != 0);
@@ -55,19 +55,19 @@
 
 #pragma mark -  SM3 摘要算法
 
-+ (NSString *_Nullable)gm_sm3DigestWithText:(NSString *)plaintext {
++ (NSString *_Nullable)sm3DigestWithText:(NSString *)plaintext {
     NSData *plaintextData = [GMUtilities stringToData:plaintext];
-    NSData *digestData = [self gm_sm3DigestWithData:plaintextData];
+    NSData *digestData = [self sm3DigestWithData:plaintextData];
     return [GMUtilities dataToBase64String:digestData];
 }
 
-+ (NSString *_Nullable)gm_sm3DigestWithHexText:(NSString *)hexPlaintext {
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)hexPlaintext {
     NSData *plaintextData = [GMUtilities hexStringToData:hexPlaintext];
-    NSData *digestData = [self gm_sm3DigestWithData:plaintextData];
+    NSData *digestData = [self sm3DigestWithData:plaintextData];
     return [GMUtilities dataToHexString:digestData];
 }
 
-+ (NSData *_Nullable)gm_sm3DigestWithData:(NSData *)plaintextData {
++ (NSData *_Nullable)sm3DigestWithData:(NSData *)plaintextData {
     NSParameterAssert(plaintextData != nil);
     NSParameterAssert(plaintextData.length != 0);
 

@@ -17,8 +17,8 @@
 
 ///MARK: - SM2 生成密钥对
 
-+ (NSDictionary<NSString *, NSString *> *_Nullable)gm_createSm2Base64KeyPair {
-    NSDictionary *keyPairDict = [self gm_createSm2DataKeyPair];
++ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2Base64KeyPair {
+    NSDictionary *keyPairDict = [self createSm2DataKeyPair];
     if (!keyPairDict) {
         return nil;
     }
@@ -35,8 +35,8 @@
     return dict;
 }
 
-+ (NSDictionary<NSString *, NSString *> *_Nullable)gm_createSm2HexKeyPair {
-    NSDictionary *keyPairDict = [self gm_createSm2DataKeyPair];
++ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2HexKeyPair {
+    NSDictionary *keyPairDict = [self createSm2DataKeyPair];
     if (!keyPairDict) {
         return nil;
     }
@@ -53,11 +53,11 @@
     return dict;
 }
 
-+ (NSDictionary<NSString *, NSData *> *_Nullable)gm_createSm2DataKeyPair {
-    return [self gm_createSm2KeyPair];
++ (NSDictionary<NSString *, NSData *> *_Nullable)createSm2DataKeyPair {
+    return [self createSm2KeyPair];
 }
 
-+ (NSDictionary<NSString *, NSData *> *_Nullable)gm_createSm2KeyPair {
++ (NSDictionary<NSString *, NSData *> *_Nullable)createSm2KeyPair {
     SM2_KEY sm2_key;
     if (sm2_key_generate(&sm2_key) != 1) {
         return nil;
@@ -83,25 +83,25 @@
 
 ///MARK: - SM2 加密
 
-+ (NSString *_Nullable)gm_sm2EncryptText:(NSString *)plaintext
++ (NSString *_Nullable)sm2EncryptText:(NSString *)plaintext
                      withBase64PublicKey:(NSString *)base64PublicKey {
     NSData *plaintextData = [GMUtilities stringToData:plaintext];
     NSData *publicKey = [GMUtilities base64StringToData:base64PublicKey];
-    NSData *cipher_data = [self gm_sm2EncryptData:plaintextData
+    NSData *cipher_data = [self sm2EncryptData:plaintextData
                                     withPublicKey:publicKey];
     return [GMUtilities dataToBase64String:cipher_data];
 }
 
-+ (NSString *_Nullable)gm_sm2EncryptHexText:(NSString *)hexPlaintext
++ (NSString *_Nullable)sm2EncryptHexText:(NSString *)hexPlaintext
                            withHexPublicKey:(NSString *)hexPublicKey {
     NSData *plaintextData = [GMUtilities hexStringToData:hexPlaintext];
     NSData *publicKey = [GMUtilities hexStringToData:hexPublicKey];
-    NSData *cipher_data = [self gm_sm2EncryptData:plaintextData
+    NSData *cipher_data = [self sm2EncryptData:plaintextData
                                     withPublicKey:publicKey];
     return [GMUtilities dataToHexString:cipher_data];
 }
 
-+ (NSData *_Nullable)gm_sm2EncryptData:(NSData *)plaintextData
++ (NSData *_Nullable)sm2EncryptData:(NSData *)plaintextData
                          withPublicKey:(NSData *)publicKey {
     NSParameterAssert(plaintextData != nil);
     NSParameterAssert(plaintextData.length != 0);
@@ -142,26 +142,26 @@
 
 ///MARK: - SM2 解密
 
-+ (NSString *_Nullable)gm_sm2DecryptText:(NSString *)base64Ciphertext
++ (NSString *_Nullable)sm2DecryptText:(NSString *)base64Ciphertext
                     withBase64PrivateKey:(NSString *)base64PrivateKey {
     NSData *cipherData = [GMUtilities base64StringToData:base64Ciphertext];
     NSData *privateKey = [GMUtilities base64StringToData:base64PrivateKey];
-    NSData *plaintext_data = [self gm_sm2DecryptData:cipherData
+    NSData *plaintext_data = [self sm2DecryptData:cipherData
                                       withPrivateKey:privateKey];
     NSString *hexString = [GMUtilities dataToHexString:plaintext_data];
     return [GMUtilities hexStringToString:hexString];
 }
 
-+ (NSString *_Nullable)gm_sm2DecryptHexText:(NSString *)hexCiphertext
++ (NSString *_Nullable)sm2DecryptHexText:(NSString *)hexCiphertext
                           withHexPrivateKey:(NSString *)hexPrivateKey {
     NSData *cipherData = [GMUtilities hexStringToData:hexCiphertext];
     NSData *privateKey = [GMUtilities hexStringToData:hexPrivateKey];
-    NSData *plaintext_data = [self gm_sm2DecryptData:cipherData
+    NSData *plaintext_data = [self sm2DecryptData:cipherData
                                       withPrivateKey:privateKey];
     return [GMUtilities dataToHexString:plaintext_data];
 }
 
-+ (NSData *_Nullable)gm_sm2DecryptData:(NSData *)cipherData
++ (NSData *_Nullable)sm2DecryptData:(NSData *)cipherData
                         withPrivateKey:(NSData *)privateKey {
     NSParameterAssert(cipherData != nil);
     NSParameterAssert(cipherData.length > 32 * 3 + 1);
@@ -202,24 +202,24 @@
 
 ///MARK: - SM2 签名
 
-+ (NSString *_Nullable)gm_sm2SignText:(NSString *)message
++ (NSString *_Nullable)sm2SignText:(NSString *)message
                  withBase64PrivateKey:(NSString *)base64PrivateKey {
     NSData *messageData = [GMUtilities stringToData:message];
     NSData *privateKey = [GMUtilities base64StringToData:base64PrivateKey];
-    NSData *signData = [self gm_sm2SignData:messageData withPrivateKey:privateKey];
+    NSData *signData = [self sm2SignData:messageData withPrivateKey:privateKey];
     return [GMUtilities dataToBase64String:signData];
 }
 
-+ (NSString *_Nullable)gm_sm2SignHexText:(NSString *)hexMessage
++ (NSString *_Nullable)sm2SignHexText:(NSString *)hexMessage
                        withHexPrivateKey:(NSString *)hexPrivateKey {
     NSData *messageData = [GMUtilities hexStringToData:hexMessage];
     NSData *privateKey = [GMUtilities hexStringToData:hexPrivateKey];
-    NSData *signData = [self gm_sm2SignData:messageData
+    NSData *signData = [self sm2SignData:messageData
                              withPrivateKey:privateKey];
     return [GMUtilities dataToHexString:signData];
 }
 
-+ (NSData *_Nullable)gm_sm2SignData:(NSData *)messageData
++ (NSData *_Nullable)sm2SignData:(NSData *)messageData
                      withPrivateKey:(NSData *)privateKey {
     NSParameterAssert(messageData != nil);
     NSParameterAssert(messageData.length != 0);
@@ -267,29 +267,29 @@
 
 ///MARK: - SM2 验签
 
-+ (BOOL)gm_sm2VerifySignature:(NSString *)base64Signature
++ (BOOL)sm2VerifySignature:(NSString *)base64Signature
                    forMessage:(NSString *)message
           withBase64PublicKey:(NSString *)base64PublicKey {
     NSData *signatureData = [GMUtilities base64StringToData:base64Signature];
     NSData *messageData = [GMUtilities stringToData:message];
     NSData *publicKey = [GMUtilities base64StringToData:base64PublicKey];
-    return [self gm_sm2VerifySignature:signatureData
+    return [self sm2VerifySignature:signatureData
                                forData:messageData
                          withPublicKey:publicKey];
 }
 
-+ (BOOL)gm_sm2VerifyHexSignature:(NSString *)hexSignature
++ (BOOL)sm2VerifyHexSignature:(NSString *)hexSignature
                    forHexMessage:(NSString *)hexMessage
                 withHexPublicKey:(NSString *)hexPublicKey {
     NSData *signatureData = [GMUtilities hexStringToData:hexSignature];
     NSData *messageData = [GMUtilities hexStringToData:hexMessage];
     NSData *publicKey = [GMUtilities hexStringToData:hexPublicKey];
-    return [self gm_sm2VerifySignature:signatureData
+    return [self sm2VerifySignature:signatureData
                                forData:messageData
                          withPublicKey:publicKey];
 }
 
-+ (BOOL)gm_sm2VerifySignature:(NSData *)signatureData
++ (BOOL)sm2VerifySignature:(NSData *)signatureData
                       forData:(NSData *)messageData
                 withPublicKey:(NSData *)publicKey {
     NSParameterAssert(signatureData != nil);

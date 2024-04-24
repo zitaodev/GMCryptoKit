@@ -20,8 +20,8 @@
 @implementation GMSm4CryptorTests
 
 - (void)setUp {
-    self.keyData = [GMSm4Cryptor gm_createSm4Key];
-    self.iVData = [GMSm4Cryptor gm_createSm4Key];
+    self.keyData = [GMSm4Cryptor createSm4Key];
+    self.iVData = [GMSm4Cryptor createSm4Key];
     self.plaintext = @"R01TbTRDcnlwdG9yJkNvcHlyaWdodCDCqSAyMDI0IHppdGFvZGV2LiBBbGwgcmlnaHRzIHJlc2VydmVkLiZHTUNyeXB0b0tpdCAwLjEuMA==";
 }
 
@@ -48,7 +48,7 @@
     NSData *iVData = [[NSData alloc] initWithBase64EncodedString:iVBase64Encoded options:NSDataBase64DecodingIgnoreUnknownCharacters];
     assert(iVData != nil);
 
-    NSData *decryptedData = [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:ciphertextData withKey:keyData withIv:iVData];
+    NSData *decryptedData = [GMSm4Cryptor sm4CbcPaddingDecryptData:ciphertextData withKey:keyData withIv:iVData];
     XCTAssertNotNil(decryptedData, @"解密结果不能为空");
     XCTAssertEqualObjects(expectedPlaintextData, decryptedData);
 }
@@ -66,15 +66,15 @@
     NSData *iVData = [[NSData alloc] initWithBase64EncodedString:iVBase64Encoded options:NSDataBase64DecodingIgnoreUnknownCharacters];
     assert(iVData != nil);
 
-    NSData *ciphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:keyData withIv:iVData];
-    NSData *expectedPlaintextData = [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:ciphertextData withKey:keyData withIv:iVData];
+    NSData *ciphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:plaintextData withKey:keyData withIv:iVData];
+    NSData *expectedPlaintextData = [GMSm4Cryptor sm4CbcPaddingDecryptData:ciphertextData withKey:keyData withIv:iVData];
     XCTAssertNotNil(ciphertextData, @"密文不能为空");
     XCTAssertEqualObjects(expectedPlaintextData, plaintextData);
 }
 
 - (void)testSm4CryptorCreateSm4Key {
-    NSData *keyData = [GMSm4Cryptor gm_createSm4Key];
-    NSData *iVData = [GMSm4Cryptor gm_createSm4Key];
+    NSData *keyData = [GMSm4Cryptor createSm4Key];
+    NSData *iVData = [GMSm4Cryptor createSm4Key];
     XCTAssertNotNil(keyData, @"生成密钥不能为空");
     XCTAssertTrue((keyData.length == 16));
     XCTAssertNotNil(iVData, @"生成iv不能为空");
@@ -84,21 +84,21 @@
 - (void)testSm4CryptorThrows {
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wnonnull"
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:nil withKey:[NSData data] withIv:[NSData data]]);
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:[NSData data] withKey:nil withIv:[NSData data]]);
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:[NSData data] withKey:[NSData data] withIv:nil]);
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:nil withKey:[NSData data] withIv:[NSData data]]);
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:[NSData data] withKey:nil withIv:[NSData data]]);
-    XCTAssertThrows((void) [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:[NSData data] withKey:[NSData data] withIv:nil]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingDecryptData:nil withKey:[NSData data] withIv:[NSData data]]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingDecryptData:[NSData data] withKey:nil withIv:[NSData data]]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingDecryptData:[NSData data] withKey:[NSData data] withIv:nil]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingEncryptData:nil withKey:[NSData data] withIv:[NSData data]]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingEncryptData:[NSData data] withKey:nil withIv:[NSData data]]);
+    XCTAssertThrows((void) [GMSm4Cryptor sm4CbcPaddingEncryptData:[NSData data] withKey:[NSData data] withIv:nil]);
     #pragma clang diagnostic pop
 }
 
 - (void)testPerformanceSm4Decrypt {
     NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    NSData *ciphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
+    NSData *ciphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
     assert(ciphertextData != nil);
     [self measureBlock:^{
-        NSData *decryptedData = [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:ciphertextData withKey:self.keyData withIv:self.iVData];
+        NSData *decryptedData = [GMSm4Cryptor sm4CbcPaddingDecryptData:ciphertextData withKey:self.keyData withIv:self.iVData];
         XCTAssertNotNil(decryptedData, @"解密结果不能为空");
     }];
 }
@@ -107,15 +107,15 @@
     NSData *plaintextData = [[NSData alloc] initWithBase64EncodedString:self.plaintext options:NSDataBase64DecodingIgnoreUnknownCharacters];
     assert(plaintextData != nil);
     [self measureBlock:^{
-        NSData *ciphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
+        NSData *ciphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:plaintextData withKey:self.keyData withIv:self.iVData];
         XCTAssertNotNil(ciphertextData, @"密文不能为空");
     }];
 }
 
 - (void)testPerformanceSm4KeyGenerate {
     [self measureBlock:^{
-        NSData *keyData = [GMSm4Cryptor gm_createSm4Key];
-        NSData *iVData = [GMSm4Cryptor gm_createSm4Key];
+        NSData *keyData = [GMSm4Cryptor createSm4Key];
+        NSData *iVData = [GMSm4Cryptor createSm4Key];
         XCTAssertNotNil(keyData, @"生成密钥不能为空");
         XCTAssertNotNil(iVData, @"生成iv不能为空");
     }];

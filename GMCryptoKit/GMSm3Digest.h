@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
          NSData类型摘要值  （UTF-8编码）
          失败则返回nil
  */
-+ (NSString *_Nullable)gm_sm3DigestWithText:(NSString *)plaintext;
-+ (NSString *_Nullable)gm_sm3DigestWithHexText:(NSString *)hexPlaintext;
-+ (NSData *_Nullable)gm_sm3DigestWithData:(NSData *)plaintextData;
++ (NSString *_Nullable)sm3DigestWithText:(NSString *)plaintext;
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)hexPlaintext;
++ (NSData *_Nullable)sm3DigestWithData:(NSData *)plaintextData;
 
 /**
  基于SM3算法的HMAC计算
@@ -42,12 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
          NSData类型HMAC值  （UTF-8编码）
          失败则返回nil
  */
-+ (NSString *_Nullable)gm_hmacSm3DigestWithText:(NSString *)plaintext
-                                      base64Key:(NSString *)base64Key;
-+ (NSString *_Nullable)gm_hmacSm3DigestWithHexText:(NSString *)hexPlaintext
-                                            hexKey:(NSString *)hexKey;
-+ (NSData *_Nullable)gm_hmacSm3DigestWithData:(NSData *)plaintextData
-                                      keyData:(NSData *)keyData;
++ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext base64Key:(NSString *)base64Key;
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)hexPlaintext hexKey:(NSString *)hexKey;
++ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plaintextData keyData:(NSData *)keyData;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
  @return 返回值：成功则返回密钥对字典实例 @{@"publicKey" : SM2公钥, @"privateKey" : SM2私钥}
          失败则返回nil
  */
-+ (NSDictionary<NSString *, NSString *> *_Nullable)gm_createSm2Base64KeyPair;
-+ (NSDictionary<NSString *, NSString *> *_Nullable)gm_createSm2HexKeyPair;
-+ (NSDictionary<NSString *, NSData *> *_Nullable)gm_createSm2DataKeyPair;
++ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2Base64KeyPair;
++ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2HexKeyPair;
++ (NSDictionary<NSString *, NSData *> *_Nullable)createSm2DataKeyPair;
 /**
  SM2 非对称加密算法，加密
  
@@ -43,12 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
         密文格式是04标识 + C1C3C2
         失败则返回nil
  */
-+ (NSString *_Nullable)gm_sm2EncryptText:(NSString *)plaintext
-                     withBase64PublicKey:(NSString *)base64PublicKey;
-+ (NSString *_Nullable)gm_sm2EncryptHexText:(NSString *)hexPlaintext
-                           withHexPublicKey:(NSString *)hexPublicKey;
-+ (NSData *_Nullable)gm_sm2EncryptData:(NSData *)plaintextData
-                         withPublicKey:(NSData *)publicKey;
++ (NSString *_Nullable)sm2EncryptText:(NSString *)plaintext withBase64PublicKey:(NSString *)base64PublicKey;
++ (NSString *_Nullable)sm2EncryptHexText:(NSString *)hexPlaintext withHexPublicKey:(NSString *)hexPublicKey;
++ (NSData *_Nullable)sm2EncryptData:(NSData *)plaintextData withPublicKey:(NSData *)publicKey;
 
 /**
  SM2 非对称加密算法，解密
@@ -66,12 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
         NSData类型  （UTF-8编码）
         失败则返回nil
  */
-+ (NSString *_Nullable)gm_sm2DecryptText:(NSString *)base64Ciphertext
-                    withBase64PrivateKey:(NSString *)base64PrivateKey;
-+ (NSString *_Nullable)gm_sm2DecryptHexText:(NSString *)hexCiphertext
-                          withHexPrivateKey:(NSString *)hexPrivateKey;
-+ (NSData *_Nullable)gm_sm2DecryptData:(NSData *)cipherData
-                        withPrivateKey:(NSData *)privateKey;
++ (NSString *_Nullable)sm2DecryptText:(NSString *)base64Ciphertext withBase64PrivateKey:(NSString *)base64PrivateKey;
++ (NSString *_Nullable)sm2DecryptHexText:(NSString *)hexCiphertext withHexPrivateKey:(NSString *)hexPrivateKey;
++ (NSData *_Nullable)sm2DecryptData:(NSData *)cipherData withPrivateKey:(NSData *)privateKey;
 
 /**
  SM2 签名验签算法，签名
@@ -86,16 +80,13 @@ NS_ASSUME_NONNULL_BEGIN
          NSString类型签名（Base64编码）
          NSString类型签名（Hex格式）
          NSData类型签名  （UTF-8编码）
-         密文格式是r+s格式
+         签名结果是R+S组成
          失败则返回nil
  
  */
-+ (NSString *_Nullable)gm_sm2SignText:(NSString *)message
-                 withBase64PrivateKey:(NSString *)base64PrivateKey;
-+ (NSString *_Nullable)gm_sm2SignHexText:(NSString *)hexMessage
-                       withHexPrivateKey:(NSString *)hexPrivateKey;
-+ (NSData *_Nullable)gm_sm2SignData:(NSData *)messageData
-                     withPrivateKey:(NSData *)privateKey;
++ (NSString *_Nullable)sm2SignText:(NSString *)message withBase64PrivateKey:(NSString *)base64PrivateKey;
++ (NSString *_Nullable)sm2SignHexText:(NSString *)hexMessage withHexPrivateKey:(NSString *)hexPrivateKey;
++ (NSData *_Nullable)sm2SignData:(NSData *)messageData withPrivateKey:(NSData *)privateKey;
 
 /**
  SM2 签名验签算法，验签
@@ -111,15 +102,9 @@ NS_ASSUME_NONNULL_BEGIN
         publicKey       NSData类型公钥  （UTF-8编码，必须是64字节长度）
  @return 验签结果,YES 表示验签成功,NO 表示验签失败
  */
-+ (BOOL)gm_sm2VerifySignature:(NSString *)base64Signature
-                   forMessage:(NSString *)message
-          withBase64PublicKey:(NSString *)base64PublicKey;
-+ (BOOL)gm_sm2VerifyHexSignature:(NSString *)hexSignature
-                   forHexMessage:(NSString *)hexMessage
-                withHexPublicKey:(NSString *)hexPublicKey;
-+ (BOOL)gm_sm2VerifySignature:(NSData *)signatureData
-                      forData:(NSData *)messageData
-                withPublicKey:(NSData *)publicKey;
++ (BOOL)sm2VerifySignature:(NSString *)base64Signature forMessage:(NSString *)message withBase64PublicKey:(NSString *)base64PublicKey;
++ (BOOL)sm2VerifyHexSignature:(NSString *)hexSignature forHexMessage:(NSString *)hexMessage withHexPublicKey:(NSString *)hexPublicKey;
++ (BOOL)sm2VerifySignature:(NSData *)signatureData forData:(NSData *)messageData withPublicKey:(NSData *)publicKey;
 @end
 
 NS_ASSUME_NONNULL_END

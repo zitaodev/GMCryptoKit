@@ -11,11 +11,11 @@
 #import <gmssl/sm4.h>
 @implementation GMSm4Cryptor
 
-+ (NSData *_Nullable)gm_createSm4Key {
-    return [GMRandomGenerator gm_secRandomDataWithLength:SM4_KEY_SIZE];
++ (NSData *_Nullable)createSm4Key {
+    return [GMRandomGenerator secRandomDataWithLength:SM4_KEY_SIZE];
 }
 
-+ (NSData *_Nullable)gm_sm4CbcPaddingEncryptData:(NSData *)plaintextData
++ (NSData *_Nullable)sm4CbcPaddingEncryptData:(NSData *)plaintextData
                                          withKey:(NSData *)key
                                           withIv:(NSData *)iv {
     NSParameterAssert(plaintextData != nil);
@@ -27,16 +27,13 @@
 
     uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
     size_t plaintext_len = plaintextData.length;
-    
     uint8_t *key_bytes = (uint8_t *)key.bytes;
     size_t key_len = key.length;
-    
     uint8_t *iv_bytes = (uint8_t *)iv.bytes;
     size_t iv_len = iv.length;
     
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
-    
     u_int8_t raw_iv[iv_len];
     memcpy(raw_iv, iv_bytes, iv_len);
     
@@ -54,7 +51,7 @@
     return cipher_data;
 }
 
-+ (NSData *_Nullable)gm_sm4CbcPaddingDecryptData:(NSData *)cipherData
++ (NSData *_Nullable)sm4CbcPaddingDecryptData:(NSData *)cipherData
                                          withKey:(NSData *)key
                                           withIv:(NSData *)iv {
     NSParameterAssert(cipherData != nil);
@@ -66,16 +63,13 @@
     
     uint8_t *cipher_bytes = (uint8_t *)cipherData.bytes;
     size_t cipher_len = cipherData.length;
-    
     uint8_t *key_bytes = (uint8_t *)key.bytes;
     size_t key_len = key.length;
-    
     uint8_t *iv_bytes = (uint8_t *)iv.bytes;
     size_t iv_len = iv.length;
     
     u_int8_t raw_key[key_len];
     memcpy(raw_key, key_bytes, key_len);
-    
     u_int8_t raw_iv[iv_len];
     memcpy(raw_iv, iv_bytes, iv_len);
     

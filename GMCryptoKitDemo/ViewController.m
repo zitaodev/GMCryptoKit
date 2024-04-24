@@ -20,14 +20,14 @@
     
     NSMutableString *logStr = [NSMutableString stringWithString:@""];
     // 生成指定字节的加密安全随机数
-    NSData *randomData = [GMRandomGenerator gm_secRandomDataWithLength:16];
+    NSData *randomData = [GMRandomGenerator secRandomDataWithLength:16];
     [logStr appendString:@"\n-------安全随机数-------"];
     [logStr appendFormat:@"\n随机数：%@", randomData];
     
     // 生成SM2密钥对
-    NSDictionary *keyPairData = [GMSm2Cryptor gm_createSm2DataKeyPair];
-    NSDictionary *keyPairHex = [GMSm2Cryptor gm_createSm2HexKeyPair];
-    NSDictionary *keyPairBase64 = [GMSm2Cryptor gm_createSm2Base64KeyPair];
+    NSDictionary *keyPairData = [GMSm2Cryptor createSm2DataKeyPair];
+    NSDictionary *keyPairHex = [GMSm2Cryptor createSm2HexKeyPair];
+    NSDictionary *keyPairBase64 = [GMSm2Cryptor createSm2Base64KeyPair];
     NSString     *publicKeyBase64 = keyPairBase64[@"publicKey"];
     NSString     *publicKeyHex = keyPairHex[@"publicKey"];
     NSData       *publicKey = keyPairData[@"publicKey"];
@@ -47,13 +47,13 @@
     NSString *hexPlaintext = [GMUtilities stringToHexString:plaintext];
     NSData   *plaintextData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *base64Ciphertext = [GMSm2Cryptor gm_sm2EncryptText:plaintext withBase64PublicKey:publicKeyBase64];
-    NSString *hexCiphertext =    [GMSm2Cryptor gm_sm2EncryptHexText:hexPlaintext withHexPublicKey:publicKeyHex];
-    NSData   *ciphertextData =     [GMSm2Cryptor gm_sm2EncryptData:plaintextData withPublicKey:publicKey];
+    NSString *base64Ciphertext = [GMSm2Cryptor sm2EncryptText:plaintext withBase64PublicKey:publicKeyBase64];
+    NSString *hexCiphertext =    [GMSm2Cryptor sm2EncryptHexText:hexPlaintext withHexPublicKey:publicKeyHex];
+    NSData   *ciphertextData =     [GMSm2Cryptor sm2EncryptData:plaintextData withPublicKey:publicKey];
     
-    NSString *decryptedtext =    [GMSm2Cryptor gm_sm2DecryptText:base64Ciphertext withBase64PrivateKey:privateKeyBase64];
-    NSString *decryptedHextext = [GMSm2Cryptor gm_sm2DecryptHexText:hexCiphertext withHexPrivateKey:privateKeyHex];
-    NSData   *decryptedData =      [GMSm2Cryptor gm_sm2DecryptData:ciphertextData withPrivateKey:privateKey];
+    NSString *decryptedtext =    [GMSm2Cryptor sm2DecryptText:base64Ciphertext withBase64PrivateKey:privateKeyBase64];
+    NSString *decryptedHextext = [GMSm2Cryptor sm2DecryptHexText:hexCiphertext withHexPrivateKey:privateKeyHex];
+    NSData   *decryptedData =      [GMSm2Cryptor sm2DecryptData:ciphertextData withPrivateKey:privateKey];
     if ([plaintext isEqualToString:decryptedtext] && [hexPlaintext isEqualToString:decryptedHextext] && [plaintextData isEqualToData:decryptedData]) {
         NSLog(@"SM2加密和解密成功");
     }else {
@@ -68,13 +68,13 @@
     NSString *message = @"sm2 sign text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *hexMessage = [GMUtilities stringToHexString:message];
     NSData   *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64Signature = [GMSm2Cryptor gm_sm2SignText:message withBase64PrivateKey:privateKeyBase64];
-    NSString *hexSignature = [GMSm2Cryptor gm_sm2SignHexText:hexMessage withHexPrivateKey:privateKeyHex];
-    NSData   *signatureData = [GMSm2Cryptor gm_sm2SignData:messageData withPrivateKey:privateKey];
+    NSString *base64Signature = [GMSm2Cryptor sm2SignText:message withBase64PrivateKey:privateKeyBase64];
+    NSString *hexSignature = [GMSm2Cryptor sm2SignHexText:hexMessage withHexPrivateKey:privateKeyHex];
+    NSData   *signatureData = [GMSm2Cryptor sm2SignData:messageData withPrivateKey:privateKey];
     
-    BOOL isBase64SignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:base64Signature forMessage:message withBase64PublicKey:publicKeyBase64];
-    BOOL isHexSignatureValid = [GMSm2Cryptor gm_sm2VerifyHexSignature:hexSignature forHexMessage:hexMessage withHexPublicKey:publicKeyHex];
-    BOOL isSignatureValid = [GMSm2Cryptor gm_sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
+    BOOL isBase64SignatureValid = [GMSm2Cryptor sm2VerifySignature:base64Signature forMessage:message withBase64PublicKey:publicKeyBase64];
+    BOOL isHexSignatureValid = [GMSm2Cryptor sm2VerifyHexSignature:hexSignature forHexMessage:hexMessage withHexPublicKey:publicKeyHex];
+    BOOL isSignatureValid = [GMSm2Cryptor sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
     if (isBase64SignatureValid && isHexSignatureValid && isSignatureValid) {
         NSLog(@"SM2签名验签成功");
     }else {
@@ -91,9 +91,9 @@
     NSString *sm3message = @"sm3 digest text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *hexSm3Message = [GMUtilities stringToHexString:sm3message];
     NSData   *sm3messageData = [sm3message dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64Digest = [GMSm3Digest gm_sm3DigestWithText:sm3message];
-    NSString *hexDigest = [GMSm3Digest gm_sm3DigestWithHexText:hexSm3Message];
-    NSData *digestData = [GMSm3Digest gm_sm3DigestWithData:sm3messageData];
+    NSString *base64Digest = [GMSm3Digest sm3DigestWithText:sm3message];
+    NSString *hexDigest = [GMSm3Digest sm3DigestWithHexText:hexSm3Message];
+    NSData *digestData = [GMSm3Digest sm3DigestWithData:sm3messageData];
     if (base64Digest && hexDigest && digestData) {
         NSLog(@"SM3提取摘要成功");
     }else {
@@ -107,12 +107,12 @@
     NSString *sm3HmacMessage = @"sm3 hmac text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *hexSm3HmacMessage = [GMUtilities stringToHexString:sm3HmacMessage];
     NSData   *sm3HmacMessageData = [sm3HmacMessage dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *keyData = [GMRandomGenerator gm_secRandomDataWithLength:16];
+    NSData *keyData = [GMRandomGenerator secRandomDataWithLength:16];
     NSString *base64Key = [GMUtilities dataToBase64String:keyData];
     NSString *hexKey = [GMUtilities dataToHexString:keyData];
-    NSString *base64Hmac = [GMSm3Digest gm_hmacSm3DigestWithText:sm3HmacMessage base64Key:base64Key];
-    NSString *hexHmac = [GMSm3Digest gm_hmacSm3DigestWithHexText:hexSm3HmacMessage hexKey:hexKey];
-    NSData *hmacData = [GMSm3Digest gm_hmacSm3DigestWithData:sm3HmacMessageData keyData:keyData];
+    NSString *base64Hmac = [GMSm3Digest hmacSm3DigestWithText:sm3HmacMessage base64Key:base64Key];
+    NSString *hexHmac = [GMSm3Digest hmacSm3DigestWithHexText:hexSm3HmacMessage hexKey:hexKey];
+    NSData *hmacData = [GMSm3Digest hmacSm3DigestWithData:sm3HmacMessageData keyData:keyData];
     if (base64Hmac && hexHmac && hmacData) {
         NSLog(@"基于SM3计算HMAC成功");
     }else {
@@ -124,10 +124,10 @@
     [logStr appendFormat:@"\nhmacSm3MAC值：%@", base64Hmac];
     
     // SM4加密和解密
-    NSData *sm4KeyData = [GMSm4Cryptor gm_createSm4Key];
-    NSData *sm4IvData = [GMSm4Cryptor gm_createSm4Key];
-    NSData *sm4CiphertextData = [GMSm4Cryptor gm_sm4CbcPaddingEncryptData:plaintextData withKey:sm4KeyData withIv:sm4IvData];
-    NSData *sm4DecryptedData = [GMSm4Cryptor gm_sm4CbcPaddingDecryptData:sm4CiphertextData withKey:sm4KeyData withIv:sm4IvData];
+    NSData *sm4KeyData = [GMSm4Cryptor createSm4Key];
+    NSData *sm4IvData = [GMSm4Cryptor createSm4Key];
+    NSData *sm4CiphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:plaintextData withKey:sm4KeyData withIv:sm4IvData];
+    NSData *sm4DecryptedData = [GMSm4Cryptor sm4CbcPaddingDecryptData:sm4CiphertextData withKey:sm4KeyData withIv:sm4IvData];
     [logStr appendString:@"\n-------SM4加密和解密-------"];
     [logStr appendFormat:@"\nSM4明文：%@", plaintextData];
     [logStr appendFormat:@"\nSM4密钥：%@", sm4KeyData];
