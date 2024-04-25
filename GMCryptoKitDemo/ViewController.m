@@ -124,19 +124,50 @@
     [logStr appendFormat:@"\nhmacSm3MAC值：%@", base64Hmac];
     
     // SM4加密和解密
-    NSData *sm4KeyData = [GMSm4Cryptor createSm4Key];
-    NSData *sm4IvData = [GMSm4Cryptor createSm4Key];
-    NSData *sm4CiphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:plaintextData withKey:sm4KeyData withIv:sm4IvData];
-    NSData *sm4DecryptedData = [GMSm4Cryptor sm4CbcPaddingDecryptData:sm4CiphertextData withKey:sm4KeyData withIv:sm4IvData];
+    NSString *sm4plaintext = @"sm4 encrypt text: Copyright © 2024 zitaodev. All rights reserved.";
+    NSString *sm4Key = [GMSm4Cryptor createSm4HexKey];
+    NSString *sm4Iv = [GMSm4Cryptor createSm4HexKey];
+    
     [logStr appendString:@"\n-------SM4加密和解密-------"];
-    [logStr appendFormat:@"\nSM4明文：%@", plaintextData];
-    [logStr appendFormat:@"\nSM4密钥：%@", sm4KeyData];
-    [logStr appendFormat:@"\nSM2IV：%@", sm4IvData];
-    [logStr appendFormat:@"\nSM4加密密文：%@", sm4CiphertextData];
-    [logStr appendFormat:@"\nSM4解密结果：%@", sm4DecryptedData];
-    
+    [logStr appendFormat:@"\nSM4明文：%@", sm4plaintext];
+    [logStr appendFormat:@"\nSM4密钥：%@", sm4Key];
+    [logStr appendFormat:@"\nSM4初始化向量：%@", sm4Iv];
+    // 1.1 UTF-8编码字符串的加密和解密
+    NSString *sm4Ciphertext = [GMSm4Cryptor sm4CbcPaddingEncryptText:sm4plaintext withKey:sm4Key withIv:sm4Iv];
+    NSString *sm4Decryptedtext = [GMSm4Cryptor sm4CbcPaddingDecryptText:sm4Ciphertext withKey:sm4Key withIv:sm4Iv];
+    if ([sm4Decryptedtext isEqualToString:sm4plaintext]) {
+        NSLog(@"SM4 UTF-8编码字符串的加密和解密成功");
+    } else {
+        NSLog(@"SM4 UTF-8编码字符串的加密和解密失败");
+    }
+    [logStr appendFormat:@"\nSM4密文Base64编码：%@", sm4Ciphertext];
+    [logStr appendFormat:@"\nSM4密文Base64解密结果：%@", sm4Decryptedtext];
+    // 1.2 Hex编码字符串的加密和解密
+    sm4plaintext = [GMUtilities stringToHexString:sm4plaintext];
+    sm4Ciphertext = [GMSm4Cryptor sm4CbcPaddingEncryptHexText:sm4plaintext withKey:sm4Key withIv:sm4Iv];
+    sm4Decryptedtext = [GMSm4Cryptor sm4CbcPaddingDecryptHexText:sm4Ciphertext withKey:sm4Key withIv:sm4Iv];
+    if ([sm4Decryptedtext isEqualToString:sm4plaintext]) {
+        NSLog(@"SM4 Hex编码字符串的加密和解密成功");
+    } else {
+        NSLog(@"SM4 Hex编码字符串的加密和解密失败");
+    }
+    [logStr appendFormat:@"\nSM4密文Hex编码：%@", sm4Ciphertext];
+    [logStr appendFormat:@"\nSM4密文Hex解密结果：%@", sm4Decryptedtext];
+    // 1.3 二进制数据的加密和解密
+    NSData *sm4KeyData = [GMUtilities hexStringToData:sm4Key];
+    NSData *sm4IvData = [GMUtilities hexStringToData:sm4Iv];
+    NSData *sm4PlaintextData = [GMUtilities stringToData:sm4plaintext];
+    NSData *sm4CiphertextData = [GMSm4Cryptor sm4CbcPaddingEncryptData:sm4PlaintextData withKey:sm4KeyData withIv:sm4IvData];
+    NSData *sm4DecryptedData = [GMSm4Cryptor sm4CbcPaddingDecryptData:sm4CiphertextData withKey:sm4KeyData withIv:sm4IvData];
+    if ([sm4DecryptedData isEqualToData:sm4PlaintextData]) {
+        NSLog(@"SM4 二进制数据的加密和解密成功");
+    } else {
+        NSLog(@"SM4 二进制数据的加密和解密失败");
+    }
+    [logStr appendFormat:@"\nSM4密文二进制数据：%@", sm4CiphertextData];
+    [logStr appendFormat:@"\nSM4密文二进制解密结果：%@", sm4DecryptedData];
+
     NSLog(@"%@", logStr);
-    
 }
 
 @end
