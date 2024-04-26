@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  不应少于16字节，采用比32字节更长的密钥长度会增加计算开销而不会增加安全性。
  
  @param plaintext 待计算HMAC的数据,输入格式分别是：plaintext UTF-8编码字符串、plainHexText Hex编码字符串、 plainData 二进制数据
- @param key       密钥,Hex编码字符串或者UTF-8编码二进制数据
+ @param key       密钥,输入格式分别是Hex编码字符串或者UTF-8编码二进制数据
  @return HMAC值,输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
 + (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext key:(NSString *)key;

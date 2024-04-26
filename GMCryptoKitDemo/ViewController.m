@@ -47,12 +47,12 @@
     NSString *hexPlaintext = [GMUtilities stringToHexString:plaintext];
     NSData   *plaintextData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *base64Ciphertext = [GMSm2Cryptor sm2EncryptText:plaintext withBase64PublicKey:publicKeyBase64];
-    NSString *hexCiphertext =    [GMSm2Cryptor sm2EncryptHexText:hexPlaintext withHexPublicKey:publicKeyHex];
+    NSString *base64Ciphertext = [GMSm2Cryptor sm2EncryptText:plaintext withPublicKey:publicKeyHex];
+    NSString *hexCiphertext =    [GMSm2Cryptor sm2EncryptHexText:hexPlaintext withPublicKey:publicKeyHex];
     NSData   *ciphertextData =     [GMSm2Cryptor sm2EncryptData:plaintextData withPublicKey:publicKey];
     
-    NSString *decryptedtext =    [GMSm2Cryptor sm2DecryptText:base64Ciphertext withBase64PrivateKey:privateKeyBase64];
-    NSString *decryptedHextext = [GMSm2Cryptor sm2DecryptHexText:hexCiphertext withHexPrivateKey:privateKeyHex];
+    NSString *decryptedtext =    [GMSm2Cryptor sm2DecryptText:base64Ciphertext withPrivateKey:privateKeyHex];
+    NSString *decryptedHextext = [GMSm2Cryptor sm2DecryptHexText:hexCiphertext withPrivateKey:privateKeyHex];
     NSData   *decryptedData =      [GMSm2Cryptor sm2DecryptData:ciphertextData withPrivateKey:privateKey];
     if ([plaintext isEqualToString:decryptedtext] && [hexPlaintext isEqualToString:decryptedHextext] && [plaintextData isEqualToData:decryptedData]) {
         NSLog(@"SM2加密和解密成功");
@@ -69,13 +69,13 @@
     
     NSString *hexMessage = [GMUtilities stringToHexString:message];
     NSData   *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64Signature = [GMSm2Cryptor sm2SignText:message withBase64PrivateKey:privateKeyBase64];
-    NSString *hexSignature = [GMSm2Cryptor sm2SignHexText:hexMessage withHexPrivateKey:privateKeyHex];
+    NSString *base64Signature = [GMSm2Cryptor sm2SignText:message withPrivateKey:privateKeyHex];
+    NSString *hexSignature = [GMSm2Cryptor sm2SignHexText:hexMessage withPrivateKey:privateKeyHex];
     NSData   *signatureData = [GMSm2Cryptor sm2SignData:messageData withPrivateKey:privateKey];
     
-    BOOL isBase64SignatureValid = [GMSm2Cryptor sm2VerifySignature:base64Signature forMessage:message withBase64PublicKey:publicKeyBase64];
-    BOOL isHexSignatureValid = [GMSm2Cryptor sm2VerifyHexSignature:hexSignature forHexMessage:hexMessage withHexPublicKey:publicKeyHex];
-    BOOL isSignatureValid = [GMSm2Cryptor sm2VerifySignature:signatureData forData:messageData withPublicKey:publicKey];
+    BOOL isBase64SignatureValid = [GMSm2Cryptor sm2VerifyText:base64Signature forMessage:message withPublicKey:publicKeyHex];
+    BOOL isHexSignatureValid = [GMSm2Cryptor sm2VerifyHexText:hexSignature forMessageHex:hexMessage withPublicKey:publicKeyHex];
+    BOOL isSignatureValid = [GMSm2Cryptor sm2VerifyData:signatureData forMessageData:messageData withPublicKey:publicKey];
     if (isBase64SignatureValid && isHexSignatureValid && isSignatureValid) {
         NSLog(@"SM2签名验签成功");
     }else {
