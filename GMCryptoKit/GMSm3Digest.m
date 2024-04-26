@@ -15,32 +15,32 @@
 #pragma mark - 基于SM3算法的HMAC计算
 
 + (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext
-                                      base64Key:(NSString *)base64Key {
-    NSData *plaintextData = [GMUtilities stringToData:plaintext];
-    NSData *keyData = [GMUtilities base64StringToData:base64Key];
-    NSData *hmacData = [self hmacSm3DigestWithData:plaintextData keyData:keyData];
+                                         key:(NSString *)key {
+    NSData *plainData = [GMUtilities stringToData:plaintext];
+    NSData *keyData = [GMUtilities hexStringToData:key];
+    NSData *hmacData = [self hmacSm3DigestWithData:plainData key:keyData];
     return [GMUtilities dataToBase64String:hmacData];
 }
 
-+ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)hexPlaintext
-                                            hexKey:(NSString *)hexKey {
-    NSData *plaintextData = [GMUtilities hexStringToData:hexPlaintext];
-    NSData *keyData = [GMUtilities hexStringToData:hexKey];
-    NSData *hmacData = [self hmacSm3DigestWithData:plaintextData keyData:keyData];
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plainHexText
+                                            key:(NSString *)key {
+    NSData *plainData = [GMUtilities hexStringToData:plainHexText];
+    NSData *keyData = [GMUtilities hexStringToData:key];
+    NSData *hmacData = [self hmacSm3DigestWithData:plainData key:keyData];
     return [GMUtilities dataToHexString:hmacData];
 }
 
-+ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plaintextData
-                                      keyData:(NSData *)keyData {
-    NSParameterAssert(plaintextData != nil);
-    NSParameterAssert(plaintextData.length != 0);
-    NSParameterAssert(keyData != nil);
-    NSParameterAssert(keyData.length != 0);
++ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plainData
+                                       key:(NSData *)key {
+    NSParameterAssert(plainData != nil);
+    NSParameterAssert(plainData.length != 0);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(key.length != 0);
     
-    uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
-    size_t plaintext_len = plaintextData.length;
-    uint8_t *key_bytes = (uint8_t *)keyData.bytes;
-    size_t key_len = keyData.length;
+    uint8_t *plaintext_bytes = (uint8_t *)plainData.bytes;
+    size_t plaintext_len = plainData.length;
+    uint8_t *key_bytes = (uint8_t *)key.bytes;
+    size_t key_len = key.length;
     
     uint8_t hmac[SM3_HMAC_SIZE];
     memset(hmac, 0, SM3_HMAC_SIZE);
@@ -53,7 +53,7 @@
     return hmac_data;
 }
 
-#pragma mark -  SM3 摘要算法
+#pragma mark -  SM3 密码杂凑算法
 
 + (NSString *_Nullable)sm3DigestWithText:(NSString *)plaintext {
     NSData *plaintextData = [GMUtilities stringToData:plaintext];
@@ -61,18 +61,18 @@
     return [GMUtilities dataToBase64String:digestData];
 }
 
-+ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)hexPlaintext {
-    NSData *plaintextData = [GMUtilities hexStringToData:hexPlaintext];
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plainHexText {
+    NSData *plaintextData = [GMUtilities hexStringToData:plainHexText];
     NSData *digestData = [self sm3DigestWithData:plaintextData];
     return [GMUtilities dataToHexString:digestData];
 }
 
-+ (NSData *_Nullable)sm3DigestWithData:(NSData *)plaintextData {
-    NSParameterAssert(plaintextData != nil);
-    NSParameterAssert(plaintextData.length != 0);
++ (NSData *_Nullable)sm3DigestWithData:(NSData *)plainData {
+    NSParameterAssert(plainData != nil);
+    NSParameterAssert(plainData.length != 0);
 
-    uint8_t *plaintext_bytes = (uint8_t *)plaintextData.bytes;
-    size_t plaintext_len = plaintextData.length;
+    uint8_t *plaintext_bytes = (uint8_t *)plainData.bytes;
+    size_t plaintext_len = plainData.length;
     
     uint8_t dgst[SM3_DIGEST_SIZE];
     memset(dgst, 0, SM3_DIGEST_SIZE);

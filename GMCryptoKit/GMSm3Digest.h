@@ -12,39 +12,28 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GMSm3Digest : NSObject
 
 /**
- SM3 摘要算法
+ SM3 密码杂凑算法
+ 将任意长度的输入数据计算为固定32字节长度的哈希值。
  
- @param plaintext     NSString类型待计算数据（UTF-8编码）
-        hexPlaintext  NSString类型待计算数据（Hex编码）
-        plaintextData NSData类型待计算数据  （UTF-8编码）
- @return 成功则返回摘要值，分别是：
-         NSString类型摘要值（Base64编码）
-         NSString类型摘要值（Hex格式）
-         NSData类型摘要值  （UTF-8编码）
-         失败则返回nil
+ @param plaintext 待计算哈希的数据，输入格式分别是：plaintext UTF-8编码字符串、plainHexText Hex编码字符串、 plainData UTF-8编码二进制数据
+ @return 哈希值，输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
 + (NSString *_Nullable)sm3DigestWithText:(NSString *)plaintext;
-+ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)hexPlaintext;
-+ (NSData *_Nullable)sm3DigestWithData:(NSData *)plaintextData;
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plainHexText;
++ (NSData *_Nullable)sm3DigestWithData:(NSData *)plainData;
 
 /**
  基于SM3算法的HMAC计算
+ 密钥长度建议采用32字节（等同于SM3哈希值的长度），
+ 不应少于16字节，采用比32字节更长的密钥长度会增加计算开销而不会增加安全性。
  
- @param plaintext     NSString类型待计算数据（UTF-8编码）
-        hexPlaintext  NSString类型待计算数据（Hex编码）
-        plaintextData NSData类型待计算数据  （UTF-8编码）
- @param base64Key     NSString类型密钥（Base64编码）
-        hexKey        NSString类型密钥（Hex编码）
-        keyData       NSData类型密钥  （UTF-8编码）
- @return 成功则返回HMAC值，分别是：
-         NSString类型HMAC值（Base64编码）
-         NSString类型HMAC值（Hex编码）
-         NSData类型HMAC值  （UTF-8编码）
-         失败则返回nil
+ @param plaintext 待计算HMAC的数据,输入格式分别是：plaintext UTF-8编码字符串、plainHexText Hex编码字符串、 plainData 二进制数据
+ @param key       密钥,Hex编码字符串或者UTF-8编码二进制数据
+ @return HMAC值,输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
-+ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext base64Key:(NSString *)base64Key;
-+ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)hexPlaintext hexKey:(NSString *)hexKey;
-+ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plaintextData keyData:(NSData *)keyData;
++ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext key:(NSString *)key;
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plainHexText key:(NSString *)key;
++ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plainData key:(NSData *)key;
 @end
 
 NS_ASSUME_NONNULL_END

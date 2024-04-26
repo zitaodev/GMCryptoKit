@@ -19,12 +19,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     NSMutableString *logStr = [NSMutableString stringWithString:@""];
-    // 生成指定字节的加密安全随机数
+    // ---------------------- 1、生成随机数 ----------------------
     NSData *randomData = [GMRandomGenerator secRandomDataWithLength:16];
     [logStr appendString:@"\n-------安全随机数-------"];
     [logStr appendFormat:@"\n随机数：%@", randomData];
     
-    // 生成SM2密钥对
+    // ---------------------- 2、生成SM2密钥对 ----------------------
     NSDictionary *keyPairData = [GMSm2Cryptor createSm2DataKeyPair];
     NSDictionary *keyPairHex = [GMSm2Cryptor createSm2HexKeyPair];
     NSDictionary *keyPairBase64 = [GMSm2Cryptor createSm2Base64KeyPair];
@@ -42,7 +42,7 @@
     [logStr appendFormat:@"\n公钥：%@", publicKey];
     [logStr appendFormat:@"\n私钥：%@", privateKey];
     
-    // SM2加密和解密
+    // ---------------------- 3、SM2加密和解密 ----------------------
     NSString *plaintext = @"sm2 encrypt text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *hexPlaintext = [GMUtilities stringToHexString:plaintext];
     NSData   *plaintextData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
@@ -64,8 +64,9 @@
     [logStr appendFormat:@"\nSM2加密密文：%@", base64Ciphertext];
     [logStr appendFormat:@"\nSM2解密结果：%@", decryptedtext];
     
-    // SM2数字签名和验证
+    // ---------------------- 4、SM2数字签名和验证 ----------------------
     NSString *message = @"sm2 sign text: Copyright © 2024 zitaodev. All rights reserved.";
+    
     NSString *hexMessage = [GMUtilities stringToHexString:message];
     NSData   *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64Signature = [GMSm2Cryptor sm2SignText:message withBase64PrivateKey:privateKeyBase64];
@@ -87,43 +88,73 @@
     [logStr appendFormat:@"\nSM2数字签名：%@", signatureData];
     [logStr appendFormat:@"\nSM2验签结果：%@", @(isSignatureValid)];
     
-    // SM3提取摘要
+    
+    // ---------------------- 5、SM3提取摘要 ----------------------
     NSString *sm3message = @"sm3 digest text: Copyright © 2024 zitaodev. All rights reserved.";
-    NSString *hexSm3Message = [GMUtilities stringToHexString:sm3message];
-    NSData   *sm3messageData = [sm3message dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64Digest = [GMSm3Digest sm3DigestWithText:sm3message];
-    NSString *hexDigest = [GMSm3Digest sm3DigestWithHexText:hexSm3Message];
-    NSData *digestData = [GMSm3Digest sm3DigestWithData:sm3messageData];
-    if (base64Digest && hexDigest && digestData) {
-        NSLog(@"SM3提取摘要成功");
-    }else {
-        NSLog(@"SM3提取摘要失败");
-    }
     [logStr appendString:@"\n-------SM3提取摘要-------"];
     [logStr appendFormat:@"\nSM3消息明文：%@", sm3message];
-    [logStr appendFormat:@"\nSM3摘要值：%@", base64Digest];
-    
-    // 基于SM3计算HMAC
-    NSString *sm3HmacMessage = @"sm3 hmac text: Copyright © 2024 zitaodev. All rights reserved.";
-    NSString *hexSm3HmacMessage = [GMUtilities stringToHexString:sm3HmacMessage];
-    NSData   *sm3HmacMessageData = [sm3HmacMessage dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *keyData = [GMRandomGenerator secRandomDataWithLength:16];
-    NSString *base64Key = [GMUtilities dataToBase64String:keyData];
-    NSString *hexKey = [GMUtilities dataToHexString:keyData];
-    NSString *base64Hmac = [GMSm3Digest hmacSm3DigestWithText:sm3HmacMessage base64Key:base64Key];
-    NSString *hexHmac = [GMSm3Digest hmacSm3DigestWithHexText:hexSm3HmacMessage hexKey:hexKey];
-    NSData *hmacData = [GMSm3Digest hmacSm3DigestWithData:sm3HmacMessageData keyData:keyData];
-    if (base64Hmac && hexHmac && hmacData) {
-        NSLog(@"基于SM3计算HMAC成功");
+    // 5.1 UTF-8编码字符串的摘要提取
+    NSString *sm3Digest = [GMSm3Digest sm3DigestWithText:sm3message];
+    if (sm3Digest) {
+        NSLog(@"Sm3 UTF-8编码字符串的摘要提取成功");
     }else {
-        NSLog(@"基于SM3计算HMAC失败");
+        NSLog(@"Sm3 UTF-8编码字符串的摘要提取失败");
     }
+    [logStr appendFormat:@"\nSM3摘要Base64提取结果：%@", sm3Digest];
+    // 5.2 Hex编码字符串的摘要提取
+    NSString *sm3messageHex = [GMUtilities stringToHexString:sm3message];
+    sm3Digest = [GMSm3Digest sm3DigestWithHexText:sm3messageHex];
+    if (sm3Digest) {
+        NSLog(@"Sm3 Hex编码字符串的摘要提取成功");
+    }else {
+        NSLog(@"Sm3 Hex编码字符串的摘要提取失败");
+    }
+    [logStr appendFormat:@"\nSM3摘要Hex提取结果：%@", sm3Digest];
+    // 7.3 二进制数据的摘要提取
+    NSData *sm3messageData = [GMUtilities stringToData:sm3message];
+    NSData *sm3DigestData = [GMSm3Digest sm3DigestWithData:sm3messageData];
+    if (sm3DigestData) {
+        NSLog(@"Sm3 二进制数据的摘要提取成功");
+    }else {
+        NSLog(@"Sm3 二进制数据的摘要提取失败");
+    }
+    [logStr appendFormat:@"\nSM3摘要二进制提取结果：%@", sm3DigestData];
+    
+    
+    // ---------------------- 6、基于SM3计算HMAC ----------------------
+    NSString *sm3HmacMessage = @"sm3 hmac text: Copyright © 2024 zitaodev. All rights reserved.";
+    NSData *hmacKeyData = [GMRandomGenerator secRandomDataWithLength:32];
+    NSString *hmacKey = [GMUtilities dataToHexString:hmacKeyData];
     [logStr appendString:@"\n-------基于SM3计算HMAC-------"];
     [logStr appendFormat:@"\nhmacSm3消息明文：%@", sm3HmacMessage];
-    [logStr appendFormat:@"\nhmacSm3密钥：%@", keyData];
-    [logStr appendFormat:@"\nhmacSm3MAC值：%@", base64Hmac];
+    // 6.1 UTF-8编码字符串的HMAC计算
+    NSString *sm3Hmac = [GMSm3Digest hmacSm3DigestWithText:sm3HmacMessage key:hmacKey];
+    if (sm3Hmac) {
+        NSLog(@"Sm3 UTF-8编码字符串的HMAC计算成功");
+    }else {
+        NSLog(@"Sm3 UTF-8编码字符串的HMAC计算失败");
+    }
+    [logStr appendFormat:@"\nSM3 HMAC计算Base64结果：%@", sm3Hmac];
+    // 6.2 Hex编码字符串的HMAC计算
+    NSString *sm3HmacMessageHex = [GMUtilities stringToHexString:sm3HmacMessage];
+    sm3Hmac = [GMSm3Digest hmacSm3DigestWithText:sm3HmacMessageHex key:hmacKey];
+    if (sm3Hmac) {
+        NSLog(@"Sm3 Hex编码字符串的HMAC计算成功");
+    }else {
+        NSLog(@"Sm3 Hex编码字符串的HMAC计算失败");
+    }
+    [logStr appendFormat:@"\nSM3 HMAC计算Hex结果：%@", sm3Hmac];
+    // 6.3 二进制数据的HMAC计算
+    NSData *sm3HmacMessageData = [GMUtilities stringToData:sm3HmacMessage];
+    NSData *hmacData = [GMSm3Digest hmacSm3DigestWithData:sm3HmacMessageData key:hmacKeyData];
+    if (hmacData) {
+        NSLog(@"Sm3 二进制数据的HMAC计算成功");
+    }else {
+        NSLog(@"Sm3 二进制数据的HMAC计算失败");
+    }
+    [logStr appendFormat:@"\nSM3 HMAC计算二进制结果：%@", hmacData];
     
-    // SM4加密和解密
+    // ---------------------- 7、SM4加密和解密 ----------------------
     NSString *sm4plaintext = @"sm4 encrypt text: Copyright © 2024 zitaodev. All rights reserved.";
     NSString *sm4Key = [GMSm4Cryptor createSm4HexKey];
     NSString *sm4Iv = [GMSm4Cryptor createSm4HexKey];
@@ -132,7 +163,7 @@
     [logStr appendFormat:@"\nSM4明文：%@", sm4plaintext];
     [logStr appendFormat:@"\nSM4密钥：%@", sm4Key];
     [logStr appendFormat:@"\nSM4初始化向量：%@", sm4Iv];
-    // 1.1 UTF-8编码字符串的加密和解密
+    // 7.1 UTF-8编码字符串的加密和解密
     NSString *sm4Ciphertext = [GMSm4Cryptor sm4CbcPaddingEncryptText:sm4plaintext withKey:sm4Key withIv:sm4Iv];
     NSString *sm4Decryptedtext = [GMSm4Cryptor sm4CbcPaddingDecryptText:sm4Ciphertext withKey:sm4Key withIv:sm4Iv];
     if ([sm4Decryptedtext isEqualToString:sm4plaintext]) {
@@ -142,18 +173,18 @@
     }
     [logStr appendFormat:@"\nSM4密文Base64编码：%@", sm4Ciphertext];
     [logStr appendFormat:@"\nSM4密文Base64解密结果：%@", sm4Decryptedtext];
-    // 1.2 Hex编码字符串的加密和解密
-    sm4plaintext = [GMUtilities stringToHexString:sm4plaintext];
-    sm4Ciphertext = [GMSm4Cryptor sm4CbcPaddingEncryptHexText:sm4plaintext withKey:sm4Key withIv:sm4Iv];
+    // 7.2 Hex编码字符串的加密和解密
+    NSString *sm4plaintextHex = [GMUtilities stringToHexString:sm4plaintext];
+    sm4Ciphertext = [GMSm4Cryptor sm4CbcPaddingEncryptHexText:sm4plaintextHex withKey:sm4Key withIv:sm4Iv];
     sm4Decryptedtext = [GMSm4Cryptor sm4CbcPaddingDecryptHexText:sm4Ciphertext withKey:sm4Key withIv:sm4Iv];
-    if ([sm4Decryptedtext isEqualToString:sm4plaintext]) {
+    if ([sm4Decryptedtext isEqualToString:sm4plaintextHex]) {
         NSLog(@"SM4 Hex编码字符串的加密和解密成功");
     } else {
         NSLog(@"SM4 Hex编码字符串的加密和解密失败");
     }
     [logStr appendFormat:@"\nSM4密文Hex编码：%@", sm4Ciphertext];
     [logStr appendFormat:@"\nSM4密文Hex解密结果：%@", sm4Decryptedtext];
-    // 1.3 二进制数据的加密和解密
+    // 7.3 二进制数据的加密和解密
     NSData *sm4KeyData = [GMUtilities hexStringToData:sm4Key];
     NSData *sm4IvData = [GMUtilities hexStringToData:sm4Iv];
     NSData *sm4PlaintextData = [GMUtilities stringToData:sm4plaintext];
