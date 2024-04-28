@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
  SM3 密码杂凑算法
  将任意长度的输入数据计算为固定32字节长度的哈希值。
  
- @param plaintext 待计算哈希的数据，输入格式分别是：plaintext UTF-8编码字符串、plainHexText Hex编码字符串、 plainData UTF-8编码二进制数据
+ @param plaintext 待计算哈希的数据，输入格式分别是：plaintext UTF-8编码字符串、plaintextHex Hex编码字符串、 plainData UTF-8编码二进制数据
  @return 哈希值，输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
 + (NSString *_Nullable)sm3DigestWithText:(NSString *)plaintext;
-+ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plainHexText;
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plaintextHex;
 + (NSData *_Nullable)sm3DigestWithData:(NSData *)plainData;
 
 /**
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return HMAC值,输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
 + (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext key:(NSString *)key;
-+ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plainHexText key:(NSString *)key;
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plaintextHex key:(NSString *)key;
 + (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plainData key:(NSData *)key;
 @end
 

@@ -22,9 +22,9 @@
     return [GMUtilities dataToBase64String:hmacData];
 }
 
-+ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plainHexText
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plaintextHex
                                             key:(NSString *)key {
-    NSData *plainData = [GMUtilities hexStringToData:plainHexText];
+    NSData *plainData = [GMUtilities hexStringToData:plaintextHex];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *hmacData = [self hmacSm3DigestWithData:plainData key:keyData];
     return [GMUtilities dataToHexString:hmacData];
@@ -61,8 +61,8 @@
     return [GMUtilities dataToBase64String:digestData];
 }
 
-+ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plainHexText {
-    NSData *plaintextData = [GMUtilities hexStringToData:plainHexText];
++ (NSString *_Nullable)sm3DigestWithHexText:(NSString *)plaintextHex {
+    NSData *plaintextData = [GMUtilities hexStringToData:plaintextHex];
     NSData *digestData = [self sm3DigestWithData:plaintextData];
     return [GMUtilities dataToHexString:digestData];
 }
