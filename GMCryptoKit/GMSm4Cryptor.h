@@ -23,10 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  SM4 对称加解密。CBC模式加密，使用PKCS#7填充标准
  
- @param plaintext 待加密的明文,输入格式分别是：plaintext UTF-8编码明文、hexPlaintext Hex编码明文、 plaintextData 二进制数据明文
- @param key 32字节Hex编码的密钥
- @param iv 32字节Hex编码的初始化向量
- @return 密文,输出格式分别是Base64编码、Hex编码、二进制数据
+ @param plaintext 待加密的明文,输入格式分别是：plaintext UTF-8编码字符串、hexPlaintext Hex编码字符串、 plaintextData UTF-8编码二进制数据
+ @param key 32字节Hex编码字符串的密钥
+ @param iv 32字节Hex编码字符串的初始化向量
+ @return 密文,输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据
  */
 + (NSString *_Nullable)sm4CbcPaddingEncryptText:(NSString *)plaintext withKey:(NSString *)key withIv:(NSString *)iv;
 + (NSString *_Nullable)sm4CbcPaddingEncryptHexText:(NSString *)hexPlaintext withKey:(NSString *)key withIv:(NSString *)iv;
@@ -35,10 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  SM4 对称加解密。CBC模式解密，使用PKCS#7填充标准
  
- @param base64Ciphertext 待加密的密文，输入格式分别是：base64Ciphertext Base64编码密文、hexCiphertext Hex编码密文、 cipherData 二进制数据密文
- @param key 32字节Hex编码的密钥
- @param iv  32字节Hex编码的初始化向量
- @return 解密后的明文,输出格式分别是UTF-8编码、Hex编码、二进制数据
+ @param base64Ciphertext 待加密的密文，输入格式分别是：base64Ciphertext Base64编码字符串、hexCiphertext Hex编码字符串、 cipherData UTF-8编码二进制数据
+ @param key 32字节Hex编码字符串的密钥
+ @param iv  32字节Hex编码字符串的初始化向量
+ @return 解密后的明文,输出格式分别是UTF-8编码字符串、Hex编码字符串、UTF-8编码二进制数据
  */
 + (NSString *_Nullable)sm4CbcPaddingDecryptText:(NSString *)base64Ciphertext withKey:(NSString *)key withIv:(NSString *)iv;
 + (NSString *_Nullable)sm4CbcPaddingDecryptHexText:(NSString *)hexCiphertext withKey:(NSString *)key withIv:(NSString *)iv;

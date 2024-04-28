@@ -15,7 +15,7 @@
 
 @implementation GMSm2Cryptor
 
-///MARK: - SM2 生成密钥对
+#pragma mark - SM2 生成密钥对
 
 + (NSDictionary<NSString *, NSString *> *_Nullable)createSm2Base64KeyPair {
     NSDictionary *keyPairDict = [self createSm2DataKeyPair];
@@ -81,7 +81,7 @@
     return dict;
 }
 
-///MARK: - SM2 加密
+#pragma mark - SM2 非对称加密算法，加密
 
 + (NSString *_Nullable)sm2EncryptText:(NSString *)plaintext
                         withPublicKey:(NSString *)publicKey {
@@ -140,7 +140,7 @@
     return cipher_data;
 }
 
-///MARK: - SM2 解密
+#pragma mark - SM2 非对称加密算法，解密
 
 + (NSString *_Nullable)sm2DecryptText:(NSString *)ciphertextBase64
                        withPrivateKey:(NSString *)privateKey {
@@ -200,7 +200,7 @@
     return original_data;
 }
 
-///MARK: - SM2 签名
+#pragma mark - SM2 签名验签算法，签名
 
 + (NSString *_Nullable)sm2SignText:(NSString *)message
                     withPrivateKey:(NSString *)privateKey {
@@ -265,7 +265,7 @@
     return rs_data;
 }
 
-///MARK: - SM2 验签
+#pragma mark - SM2 签名验签算法，验签
 
 + (BOOL)sm2VerifyText:(NSString *)base64Signature
            forMessage:(NSString *)message

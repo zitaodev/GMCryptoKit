@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param plaintext 待加密的明文,输入格式分别是：plaintext UTF-8编码字符串、plaintextHex Hex编码字符串、 plainData UTF-8编码二进制数据
  @param publicKey 公钥,输入格式分别是Hex编码字符串或者UTF-8编码二进制数据
- @return 密文（04||C1||C3||C2）,输出格式分别是Base64编码字符串、Hex编码字符串、二进制数据;失败则返回nil
+ @return 密文（04||C1||C3||C2）,输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据;失败则返回nil
  */
 + (NSString *_Nullable)sm2EncryptText:(NSString *)plaintext withPublicKey:(NSString *)publicKey;
 + (NSString *_Nullable)sm2EncryptHexText:(NSString *)plaintextHex withPublicKey:(NSString *)publicKey;
@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param ciphertextBase64 密文（04||C1||C3||C2）,输入格式分别是：ciphertextBase64 Base64编码字符串、ciphertextHex Hex编码字符串、 cipherData UTF-8编码二进制数据
  @param privateKey 私钥,输入格式分别是Hex编码字符串或者UTF-8编码二进制数据
- @return 解密结果，输出格式分别是UTF-8编码字符串、Hex编码字符串、二进制数据;失败则返回nil
+ @return 解密结果，输出格式分别是UTF-8编码字符串、Hex编码字符串、UTF-8编码二进制数据;失败则返回nil
  */
 + (NSString *_Nullable)sm2DecryptText:(NSString *)ciphertextBase64 withPrivateKey:(NSString *)privateKey;
 + (NSString *_Nullable)sm2DecryptHexText:(NSString *)ciphertextHex withPrivateKey:(NSString *)privateKey;
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param message 待签名消息,输入格式分别是：message UTF-8编码字符串、messageHex Hex编码字符串、 messageData UTF-8编码二进制数据
  @param privateKey 私钥,输入格式分别是Hex编码字符串或者UTF-8编码二进制数据
- @return 签名结果，输出格式分别是Base64编码字符串、Hex编码字符串、二进制数据;失败则返回nil
+ @return 签名结果，输出格式分别是Base64编码字符串、Hex编码字符串、UTF-8编码二进制数据;失败则返回nil
  */
 + (NSString *_Nullable)sm2SignText:(NSString *)message withPrivateKey:(NSString *)privateKey;
 + (NSString *_Nullable)sm2SignHexText:(NSString *)messageHex withPrivateKey:(NSString *)privateKey;
