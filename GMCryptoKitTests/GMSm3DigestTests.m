@@ -14,7 +14,7 @@
 @property (nonatomic, copy) NSString *inputText;           // 预置原文,UTF8编码
 @property (nonatomic, copy) NSString *expectedDigestText;  // 预置摘要,Base64编码
 @property (nonatomic, copy) NSString *expectedHmacDigestText;  // 预置hmac摘要,Base64编码
-@property (nonatomic, copy) NSString *keyText;                 // 密钥,Base64编码
+@property (nonatomic, copy) NSString *keyText;                 // 密钥,Hex编码
 
 @end
 
@@ -24,7 +24,7 @@
     self.inputText = @"Copyright © 2024 zitaodev. All rights reserved.";
     self.expectedDigestText = @"JdDMJHzBV5pMiNBjDx7NeCIpY8gFiV7eH/O4rKD5Kv4=";
     self.expectedHmacDigestText = @"FnR4M9589MZZ9A9UUP2bx38ced/1LOKitiswEN3kF8Y=";
-    self.keyText = @"lDvrzbpQ1RxSJdKnd0Toz7ouvorO0h4U6vjEfjnxSRA=";
+    self.keyText = @"943BEBCDBA50D51C5225D2A77744E8CFBA2EBE8ACED21E14EAF8C47E39F14910";
 }
 
 - (void)tearDown {
@@ -53,7 +53,7 @@
     NSData *inputData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
     assert(inputData != nil);
     
-    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:self.keyText options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSData *keyData = [GMUtilities hexStringToData:self.keyText];
     assert(keyData != nil);
     
     NSData *expectedData = [[NSData alloc] initWithBase64EncodedString:self.expectedHmacDigestText options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -110,7 +110,24 @@
     #pragma clang diagnostic pop
 }
 
-- (void)testPerformanceHmacSm3Digest {
+- (void)testPerformanceHmacSm3DigestWithText {
+    [self measureBlock:^{
+        // 提取摘要
+        NSString *digest = [GMSm3Digest hmacSm3DigestWithText:self.inputText key:self.keyText];
+        XCTAssertTrue(digest,  @"hmacSm3摘要值不能为空");
+    }];
+}
+
+- (void)testPerformanceHmacSm3DigestWithHexText {
+    NSString *plaintextHex = [GMUtilities stringToHexString:self.inputText];
+    [self measureBlock:^{
+        // 提取摘要
+        NSString *digest = [GMSm3Digest hmacSm3DigestWithHexText:plaintextHex key:self.keyText];
+        XCTAssertTrue(digest,  @"hmacSm3摘要值不能为空");
+    }];
+}
+
+- (void)testPerformanceHmacSm3DigestWithData {
     NSData *plaintextData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [[NSData alloc] initWithBase64EncodedString:self.keyText options:NSDataBase64DecodingIgnoreUnknownCharacters];
     [self measureBlock:^{
@@ -120,7 +137,25 @@
     }];
 }
 
-- (void)testPerformanceSm3Digest {
+- (void)testPerformanceSm3DigestWithText {
+    NSData *plaintextData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
+    [self measureBlock:^{
+        // 提取摘要
+        NSString *digest = [GMSm3Digest sm3DigestWithText:self.inputText];
+        XCTAssertTrue(digest,  @"SM3摘要值不能为空");
+    }];
+}
+
+- (void)testPerformanceSm3DigestWithHexText {
+    NSString *plaintextHex = [GMUtilities stringToHexString:self.inputText];
+    [self measureBlock:^{
+        // 提取摘要
+        NSString *digest = [GMSm3Digest sm3DigestWithHexText:plaintextHex];
+        XCTAssertTrue(digest,  @"SM3摘要值不能为空");
+    }];
+}
+
+- (void)testPerformanceSm3DigestWithData {
     NSData *plaintextData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
     [self measureBlock:^{
         // 提取摘要
