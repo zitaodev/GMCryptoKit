@@ -13,11 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GMSm2Cryptor : NSObject
 
 /**
- SM2 生成密钥对
+ SM2 生成密钥对，私钥为256bit的大整数(64字节Hex编码字符串或32字节TF-8编码二进制数据)，公钥为512bit的大整数(128字节Hex编码字符串或64字节TF-8编码二进制数据)
  
  @return 字典实例密钥对 @{@"publicKey" : SM2公钥, @"privateKey" : SM2私钥},输出格式分别是Hex编码字符串、UTF-8编码二进制数据，失败则返回nil
  */
-+ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2Base64KeyPair;
 + (NSDictionary<NSString *, NSString *> *_Nullable)createSm2HexKeyPair;
 + (NSDictionary<NSString *, NSData *> *_Nullable)createSm2DataKeyPair;
 
