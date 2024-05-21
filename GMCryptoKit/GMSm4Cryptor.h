@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  SM4 生成密钥。也可以调用该方法生成SM4 CBC模式的初始化向量iv，iv长度和key长度一致
 
- @return 密钥，输出格式分别是32字节Hex编码字符串或者16字节的二进制数据
+ @return 密钥，输出格式分别是32字节Hex编码字符串或者16字节UTF-8编码的二进制数据
  */
 + (NSString *_Nullable)createSm4HexKey;
 + (NSData *_Nullable)createSm4Key;

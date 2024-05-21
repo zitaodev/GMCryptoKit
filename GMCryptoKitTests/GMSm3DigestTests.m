@@ -138,7 +138,6 @@
 }
 
 - (void)testPerformanceSm3DigestWithText {
-    NSData *plaintextData = [self.inputText dataUsingEncoding:NSUTF8StringEncoding];
     [self measureBlock:^{
         // 提取摘要
         NSString *digest = [GMSm3Digest sm3DigestWithText:self.inputText];

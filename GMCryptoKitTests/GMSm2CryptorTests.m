@@ -13,10 +13,8 @@
 
 @property (nonatomic, copy) NSData *publicKeyData;  // 公钥
 @property (nonatomic, copy) NSString *publicKeyHex;  // hex编码公钥
-@property (nonatomic, copy) NSString *publicKeyBase64;  // Base64编码公钥
 @property (nonatomic, copy) NSData *privateKeyData;  // 私钥
 @property (nonatomic, copy) NSString *privateKeyHex;  // hex编码私钥
-@property (nonatomic, copy) NSString *privateKeyBase64;  // Base64编码私钥
 @property (nonatomic, copy) NSString *plaintext;   // 预置原文,UTF8编码
 
 @end
@@ -26,22 +24,17 @@
 - (void)setUp {
     NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
     NSDictionary *keyPairHex = [GMSm2Cryptor createSm2HexKeyPair];
-    NSDictionary *keyPairBase64 = [GMSm2Cryptor createSm2Base64KeyPair];
     self.publicKeyData = keyPair[@"publicKey"];
     self.publicKeyHex = keyPairHex[@"publicKey"];
-    self.publicKeyBase64 = keyPairBase64[@"publicKey"];
     self.privateKeyData = keyPair[@"privateKey"];
     self.privateKeyHex = keyPairHex[@"privateKey"];
-    self.privateKeyBase64 = keyPairBase64[@"privateKey"];
 
     self.plaintext = @"Copyright © 2024 zitaodev. All rights reserved.";
 }
 
 - (void)tearDown {
-    self.publicKeyBase64 = nil;
     self.publicKeyHex = nil;
     self.publicKeyData = nil;
-    self.privateKeyBase64 = nil;
     self.privateKeyHex = nil;
     self.privateKeyData = nil;
     self.plaintext = nil;
@@ -194,14 +187,6 @@
     XCTAssertEqualObjects(expectedPlaintextData, plaintextData);
 }
 
-- (void)testSm2CryptorCreateBase64KeyPair {
-    NSDictionary<NSString *, NSString *> *keyPair = [GMSm2Cryptor createSm2Base64KeyPair];
-    NSString *publicKey = keyPair[@"publicKey"];
-    NSString *privateKey = keyPair[@"privateKey"];
-    XCTAssertNotNil(publicKey, @"生成公钥不能为空");
-    XCTAssertNotNil(privateKey, @"生成私钥不能为空");
-}
-
 - (void)testSm2CryptorCreateHexKeyPair {
     NSDictionary<NSString *, NSString *> *keyPair = [GMSm2Cryptor createSm2HexKeyPair];
     NSString *publicKey = keyPair[@"publicKey"];
@@ -349,16 +334,6 @@
         NSData *ciphertextData = [GMSm2Cryptor sm2EncryptData:plaintextData 
                                                    withPublicKey:self.publicKeyData];
         XCTAssertNotNil(ciphertextData, @"密文不能为空");
-    }];
-}
-
-- (void)testPerformanceSm2Base64KeyPairGenerate {
-    [self measureBlock:^{
-        NSDictionary<NSString *, NSString *> *keyPair = [GMSm2Cryptor createSm2Base64KeyPair];
-        NSString *publicKeyBase64 = keyPair[@"publicKey"];
-        NSString *privateKeyBase64 = keyPair[@"privateKey"];
-        XCTAssertNotNil(publicKeyBase64, @"生成公钥不能为空");
-        XCTAssertNotNil(privateKeyBase64, @"生成私钥不能为空");
     }];
 }
 

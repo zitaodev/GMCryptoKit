@@ -30,9 +30,7 @@
 
 #pragma mark - SM4 CBC模式加密
 
-+ (NSString *_Nullable)sm4CbcPaddingEncryptText:(NSString *)plaintext
-                                        withKey:(NSString *)key
-                                         withIv:(NSString *)iv {
++ (NSString *_Nullable)sm4CbcPaddingEncryptText:(NSString *)plaintext withKey:(NSString *)key withIv:(NSString *)iv {
     NSData *plaintextData =  [GMUtilities stringToData:plaintext];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *ivData = [GMUtilities hexStringToData:iv];
@@ -40,9 +38,7 @@
     return [GMUtilities dataToBase64String:cipher_data];
 }
 
-+ (NSString *_Nullable)sm4CbcPaddingEncryptHexText:(NSString *)plaintextHex
-                                           withKey:(NSString *)key
-                                            withIv:(NSString *)iv {
++ (NSString *_Nullable)sm4CbcPaddingEncryptHexText:(NSString *)plaintextHex withKey:(NSString *)key withIv:(NSString *)iv {
     NSData *plaintextData = [GMUtilities hexStringToData:plaintextHex];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *ivData = [GMUtilities hexStringToData:iv];
@@ -50,9 +46,7 @@
     return [GMUtilities dataToHexString:cipher_data];
 }
 
-+ (NSData *_Nullable)sm4CbcPaddingEncryptData:(NSData *)plainData
-                                         withKey:(NSData *)key
-                                          withIv:(NSData *)iv {
++ (NSData *_Nullable)sm4CbcPaddingEncryptData:(NSData *)plainData withKey:(NSData *)key withIv:(NSData *)iv {
     NSParameterAssert(plainData != nil);
     NSParameterAssert(plainData.length != 0);
     NSParameterAssert(key != nil);
@@ -92,9 +86,7 @@
     NSData *cipherData = [GMUtilities base64StringToData:ciphertextBase64];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *ivData = [GMUtilities hexStringToData:iv];
-    NSData *plaintext_data = [self sm4CbcPaddingDecryptData:cipherData
-                                                    withKey:keyData
-                                                     withIv:ivData];
+    NSData *plaintext_data = [self sm4CbcPaddingDecryptData:cipherData withKey:keyData withIv:ivData];
     NSString *hexString = [GMUtilities dataToHexString:plaintext_data];
     return [GMUtilities hexStringToString:hexString];
 }
@@ -103,15 +95,11 @@
     NSData *cipherData = [GMUtilities hexStringToData:ciphertextHex];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *ivData = [GMUtilities hexStringToData:iv];
-    NSData *plaintext_data = [self sm4CbcPaddingDecryptData:cipherData
-                                                    withKey:keyData
-                                                     withIv:ivData];
+    NSData *plaintext_data = [self sm4CbcPaddingDecryptData:cipherData withKey:keyData withIv:ivData];
     return [GMUtilities dataToHexString:plaintext_data];
 }
 
-+ (NSData *_Nullable)sm4CbcPaddingDecryptData:(NSData *)cipherData
-                                      withKey:(NSData *)key
-                                       withIv:(NSData *)iv {
++ (NSData *_Nullable)sm4CbcPaddingDecryptData:(NSData *)cipherData withKey:(NSData *)key withIv:(NSData *)iv {
     NSParameterAssert(cipherData != nil);
     NSParameterAssert(cipherData.length != 0);
     NSParameterAssert(key != nil);

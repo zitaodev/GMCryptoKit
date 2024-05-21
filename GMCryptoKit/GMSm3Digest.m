@@ -14,24 +14,21 @@
 
 #pragma mark - 基于SM3算法的HMAC计算
 
-+ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext
-                                         key:(NSString *)key {
++ (NSString *_Nullable)hmacSm3DigestWithText:(NSString *)plaintext key:(NSString *)key {
     NSData *plainData = [GMUtilities stringToData:plaintext];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *hmacData = [self hmacSm3DigestWithData:plainData key:keyData];
     return [GMUtilities dataToBase64String:hmacData];
 }
 
-+ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plaintextHex
-                                            key:(NSString *)key {
++ (NSString *_Nullable)hmacSm3DigestWithHexText:(NSString *)plaintextHex key:(NSString *)key {
     NSData *plainData = [GMUtilities hexStringToData:plaintextHex];
     NSData *keyData = [GMUtilities hexStringToData:key];
     NSData *hmacData = [self hmacSm3DigestWithData:plainData key:keyData];
     return [GMUtilities dataToHexString:hmacData];
 }
 
-+ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plainData
-                                       key:(NSData *)key {
++ (NSData *_Nullable)hmacSm3DigestWithData:(NSData *)plainData key:(NSData *)key {
     NSParameterAssert(plainData != nil);
     NSParameterAssert(plainData.length != 0);
     NSParameterAssert(key != nil);
