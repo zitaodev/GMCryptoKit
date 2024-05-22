@@ -10,36 +10,24 @@
 #import "GMUtilities.h"
 #import <gmssl/sm2.h>
 
-#define GM_CRYPTO_TAG_PUBLICKEY            @"publicKey"
-#define GM_CRYPTO_TAG_PRIVATEKEY           @"privateKey"
-
 @implementation GMSm2Cryptor
 
 #pragma mark - SM2 生成密钥对
 
-+ (NSDictionary<NSString *, NSString *> *_Nullable)createSm2HexKeyPair {
-    NSDictionary *keyPairDict = [self createSm2DataKeyPair];
-    if (!keyPairDict) {
++ (NSArray<NSString *> *_Nullable)createSm2HexKeyPair {
+    NSArray *keyPair = [self createSm2DataKeyPair];
+    if (!keyPair) {
         return nil;
     }
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSString *privateKeyHexString = [GMUtilities dataToHexString:keyPairDict[GM_CRYPTO_TAG_PRIVATEKEY]];
-    if (privateKeyHexString) {
-        dict[GM_CRYPTO_TAG_PRIVATEKEY] = privateKeyHexString;
+    NSString *publicKeyHexString = [GMUtilities dataToHexString:keyPair[0]];
+    NSString *privateKeyHexString = [GMUtilities dataToHexString:keyPair[1]];
+    if (privateKeyHexString && publicKeyHexString) {
+        return @[publicKeyHexString, privateKeyHexString];
     }
-    NSString *publicKeyHexString = [GMUtilities dataToHexString:keyPairDict[GM_CRYPTO_TAG_PUBLICKEY]];
-    if (publicKeyHexString) {
-        dict[GM_CRYPTO_TAG_PUBLICKEY] = publicKeyHexString;
-    }
-    return dict;
+    return nil;
 }
 
-+ (NSDictionary<NSString *, NSData *> *_Nullable)createSm2DataKeyPair {
-    return [self createSm2KeyPair];
-}
-
-+ (NSDictionary<NSString *, NSData *> *_Nullable)createSm2KeyPair {
++ (NSArray<NSData *> *_Nullable)createSm2DataKeyPair {
     SM2_KEY sm2_key;
     if (sm2_key_generate(&sm2_key) != 1) {
         return nil;
@@ -51,16 +39,12 @@
     memcpy(pub_key, public_key.x, 32);
     memcpy(pub_key + 32, public_key.y, 32);
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSData *privateKey_data = [NSData dataWithBytes:sm2_key.private_key length:32];
-    if (privateKey_data) {
-        dict[GM_CRYPTO_TAG_PRIVATEKEY] = privateKey_data;
-    }
     NSData *publicKey_data = [NSData dataWithBytes:pub_key length:pub_key_len];
-    if (publicKey_data) {
-        dict[GM_CRYPTO_TAG_PUBLICKEY] = publicKey_data;
+    if (privateKey_data && publicKey_data) {
+        return @[publicKey_data, privateKey_data];
     }
-    return dict;
+    return nil;
 }
 
 #pragma mark - SM2 非对称加密算法，加密

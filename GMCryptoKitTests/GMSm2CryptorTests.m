@@ -22,12 +22,12 @@
 @implementation GMSm2CryptorTests
 
 - (void)setUp {
-    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
-    NSDictionary *keyPairHex = [GMSm2Cryptor createSm2HexKeyPair];
-    self.publicKeyData = keyPair[@"publicKey"];
-    self.publicKeyHex = keyPairHex[@"publicKey"];
-    self.privateKeyData = keyPair[@"privateKey"];
-    self.privateKeyHex = keyPairHex[@"privateKey"];
+    NSArray<NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
+    NSArray *keyPairHex = [GMSm2Cryptor createSm2HexKeyPair];
+    self.publicKeyData = keyPair[0];
+    self.publicKeyHex = keyPairHex[0];
+    self.privateKeyData = keyPair[1];
+    self.privateKeyHex = keyPairHex[1];
 
     self.plaintext = @"Copyright © 2024 zitaodev. All rights reserved.";
 }
@@ -188,17 +188,17 @@
 }
 
 - (void)testSm2CryptorCreateHexKeyPair {
-    NSDictionary<NSString *, NSString *> *keyPair = [GMSm2Cryptor createSm2HexKeyPair];
-    NSString *publicKey = keyPair[@"publicKey"];
-    NSString *privateKey = keyPair[@"privateKey"];
+    NSArray<NSString *> *keyPair = [GMSm2Cryptor createSm2HexKeyPair];
+    NSString *publicKey = keyPair[0];
+    NSString *privateKey = keyPair[1];
     XCTAssertNotNil(publicKey, @"生成公钥不能为空");
     XCTAssertNotNil(privateKey, @"生成私钥不能为空");
 }
 
 - (void)testSm2CryptorCreateKeyPair {
-    NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
-    NSData *publicKey = keyPair[@"publicKey"];
-    NSData *privateKey = keyPair[@"privateKey"];
+    NSArray<NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
+    NSData *publicKey = keyPair[0];
+    NSData *privateKey = keyPair[1];
     XCTAssertNotNil(publicKey, @"生成公钥不能为空");
     XCTAssertNotNil(privateKey, @"生成私钥不能为空");
 }
@@ -339,9 +339,9 @@
 
 - (void)testPerformanceSm2HexKeyPairGenerate {
     [self measureBlock:^{
-        NSDictionary<NSString *, NSString *> *keyPair = [GMSm2Cryptor createSm2HexKeyPair];
-        NSString *publicKeyHex = keyPair[@"publicKey"];
-        NSString *privateKeyHex = keyPair[@"privateKey"];
+        NSArray<NSString *> *keyPair = [GMSm2Cryptor createSm2HexKeyPair];
+        NSString *publicKeyHex = keyPair[0];
+        NSString *privateKeyHex = keyPair[1];
         XCTAssertNotNil(publicKeyHex, @"生成公钥不能为空");
         XCTAssertNotNil(privateKeyHex, @"生成私钥不能为空");
     }];
@@ -349,9 +349,9 @@
 
 - (void)testPerformanceSm2KeyPairGenerate {
     [self measureBlock:^{
-        NSDictionary<NSString *, NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
-        NSData *publicKeyData = keyPair[@"publicKey"];
-        NSData *privateKeyData = keyPair[@"privateKey"];
+        NSArray<NSData *> *keyPair = [GMSm2Cryptor createSm2DataKeyPair];
+        NSData *publicKeyData = keyPair[0];
+        NSData *privateKeyData = keyPair[1];
         XCTAssertNotNil(publicKeyData, @"生成公钥不能为空");
         XCTAssertNotNil(privateKeyData, @"生成私钥不能为空");
     }];
