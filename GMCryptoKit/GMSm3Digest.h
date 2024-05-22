@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GMSm3Digest : NSObject
 
 /**
- SM3 密码杂凑算法
+ SM3 摘要算法
  将任意长度的输入数据计算为固定32字节长度的哈希值。
  
  @param plaintext 待计算哈希的数据，输入格式分别是：plaintext UTF-8编码字符串、plaintextHex Hex编码字符串、 plainData UTF-8编码二进制数据
